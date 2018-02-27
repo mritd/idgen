@@ -32,7 +32,7 @@ import (
 var emailCmd = &cobra.Command{
 	Use:   "email",
 	Short: "生成 Email",
-	Long:  `随机生成一个 Email，格式为 8位大小写字母@5位大小写字母.常用顶级域名后缀`,
+	Long:  `随机生成一个 Email，格式为 8位小写字母@5位小写字母.常用顶级域名后缀`,
 	Run: func(cmd *cobra.Command, args []string) {
 		email := generator.EmailGenerate()
 		fmt.Println(email)

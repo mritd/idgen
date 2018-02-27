@@ -51,21 +51,12 @@ func OneOddChar() string {
 	return string([]rune(metadata.ODD_CHINESE_CHARS)[rand.Intn(len([]rune(metadata.ODD_CHINESE_CHARS)))])
 }
 
-// 随机英文字符
+// 随机英文小写字母
 func RandStr(len int) string {
 	rand.Seed(time.Now().UnixNano())
 	data := make([]byte, len)
-	var num int
 	for i := 0; i < len; i++ {
-		num = rand.Intn(57) + 65
-		for {
-			if num > 90 && num < 97 {
-				num = rand.Intn(57) + 65
-			} else {
-				break
-			}
-		}
-		data[i] = byte(num)
+		data[i] = byte(rand.Intn(26) + 97)
 	}
 	return string(data)
 }
