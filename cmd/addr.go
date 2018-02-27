@@ -18,15 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// addrCmd represents the addr command
+var addrCmd = &cobra.Command{
+	Use:   "addr",
+	Short: "生成地址信息",
+	Long:  `随机生成中国大陆地址信息`,
+	Run: func(cmd *cobra.Command, args []string) {
+		addr := generator.AddrGenerate()
+		fmt.Println(addr)
+		clipboard.WriteAll(addr)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(addrCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// addrCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// addrCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

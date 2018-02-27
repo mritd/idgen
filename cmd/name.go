@@ -18,15 +18,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// nameCmd represents the name command
+var nameCmd = &cobra.Command{
+	Use:   "name",
+	Short: "生成姓名",
+	Long:  `随机生成一个中文姓名，长度为 2-4 位(包含复姓)`,
+	Run: func(cmd *cobra.Command, args []string) {
+		name := generator.NameGenerate()
+		fmt.Println(name)
+		clipboard.WriteAll(name)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(nameCmd)
+	nameCmd.Flags().BoolP("odd", "o", false, "生成复杂(带有生僻字)姓名")
+	nameCmd.Run = func(cmd *cobra.Command, args []string) {
+		name := generator.NameGenerateOdd()
+		fmt.Println(name)
+		clipboard.WriteAll(name)
+	}
 }

@@ -18,15 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// mobileCmd represents the mobile command
+var mobileCmd = &cobra.Command{
+	Use:   "mobile",
+	Short: "生成手机号",
+	Long:  `随机生成大陆手机号`,
+	Run: func(cmd *cobra.Command, args []string) {
+		mobile := generator.MobileGenerate()
+		fmt.Println(mobile)
+		clipboard.WriteAll(mobile)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(mobileCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// mobileCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// mobileCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

@@ -18,15 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// idnoCmd represents the idno command
+var idnoCmd = &cobra.Command{
+	Use:   "idno",
+	Short: "生成身份证号.",
+	Long:  `生成中国大陆十八位身份证号`,
+	Run: func(cmd *cobra.Command, args []string) {
+		idno := generator.IDCardGenerate()
+		fmt.Println(idno)
+		clipboard.WriteAll(idno)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(idnoCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// idnoCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// idnoCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

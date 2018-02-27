@@ -18,15 +18,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// allCmd represents the all command
+var allCmd = &cobra.Command{
+	Use:   "all",
+	Short: "生成所有信息",
+	Long:  `生成本工具支持的所有信息`,
+	Run: func(cmd *cobra.Command, args []string) {
+		name := generator.NameGenerate()
+		idno := generator.IDCardGenerate()
+		mobile := generator.MobileGenerate()
+		email := generator.EmailGenerate()
+		addr := generator.AddrGenerate()
+		fmt.Println(name)
+		fmt.Println(idno)
+		fmt.Println(mobile)
+		fmt.Println(email)
+		fmt.Println(addr)
+		clipboard.WriteAll(name + "\n" + idno + "\n" + mobile + "\n" + email + "\n" + addr)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(allCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// allCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// allCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

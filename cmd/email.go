@@ -18,15 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package generator
+package cmd
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
+
+	"github.com/atotto/clipboard"
+	"github.com/mritd/idgen/generator"
+	"github.com/spf13/cobra"
 )
 
-// 随机生成手机号
-func MobileGenerate() string {
-	return metadata.MobilePrefix[util.RandInt(0, len(metadata.MobilePrefix))] + fmt.Sprintf("%0*d", 8, util.RandInt(0, 100000000))
+// emailCmd represents the email command
+var emailCmd = &cobra.Command{
+	Use:   "email",
+	Short: "生成 Email",
+	Long:  `随机生成一个 Email，格式为 8位大小写字母@5位大小写字母.常用顶级域名后缀`,
+	Run: func(cmd *cobra.Command, args []string) {
+		email := generator.EmailGenerate()
+		fmt.Println(email)
+		clipboard.WriteAll(email)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(emailCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// emailCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// emailCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
