@@ -37,7 +37,8 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "idgen",
 	Short: "身份信息生成器",
-	Long:  `该工具用于生成中国大陆 姓名 身份证号 手机号 地址 Email，并且将自动复制到系统剪切板；不使用子命令则默认生成身份证号`,
+	Long:  `该工具用于生成中国大陆 姓名 身份证号 手机号 地址 Email，
+并且将自动复制到系统剪切板；不使用子命令则默认生成身份证号`,
 	Run: func(cmd *cobra.Command, args []string) {
 		idno := generator.IDCardGenerate()
 		fmt.Println(idno)
