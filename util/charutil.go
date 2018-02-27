@@ -28,10 +28,16 @@ import (
 
 // 随机单个中文字符
 func GenOneChineseChars() string {
-	return string(rune(RandInt(19968, 40869)))
+	return metadata.ChineseChars[RandInt(0, len(metadata.ChineseChars))]
 }
 
-// 指定长度随机中文字符
+// 随机单个复杂中文字符
+func GenOneOddChar() string {
+	rand.Seed(time.Now().UnixNano())
+	return string([]rune(metadata.OddChineseChars)[rand.Intn(len([]rune(metadata.OddChineseChars)))])
+}
+
+// 指定长度随机中文字符(包含复杂字符)
 func GenFixedLengthChineseChars(length int) string {
 	strRune := make([]rune, length)
 	for i := range strRune {
@@ -42,13 +48,12 @@ func GenFixedLengthChineseChars(length int) string {
 
 // 指定范围随机中文字符
 func GenRandomLengthChineseChars(start, end int) string {
-	return GenFixedLengthChineseChars(RandInt(start, end))
-}
-
-// 随机单个复杂中文字符
-func OneOddChar() string {
-	rand.Seed(time.Now().UnixNano())
-	return string([]rune(metadata.ODD_CHINESE_CHARS)[rand.Intn(len([]rune(metadata.ODD_CHINESE_CHARS)))])
+	length := RandInt(start, end)
+	tmp := ""
+	for i := 0; i < length; i++ {
+		tmp += GenOneChineseChars()
+	}
+	return tmp
 }
 
 // 随机英文小写字母

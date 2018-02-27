@@ -32,5 +32,5 @@ func NameGenerate() string {
 
 // 生成带有生僻字的姓名
 func NameGenerateOdd() string {
-	return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.OneOddChar()
+	return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenOneOddChar()
 }

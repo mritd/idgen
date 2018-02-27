@@ -11,11 +11,15 @@ func Test_GenOneChineseChars(t *testing.T) {
 }
 
 func Test_GenFixedLengthChineseChars(t *testing.T) {
+	fmt.Println(util.GenFixedLengthChineseChars(100))
+}
+
+func Test_GenRandomLengthChineseChars(t *testing.T) {
 	fmt.Println(util.GenRandomLengthChineseChars(0, 100))
 }
 
 func Test_OneOddChar(t *testing.T) {
-	fmt.Println(util.OneOddChar())
+	fmt.Println(util.GenOneOddChar())
 }
 
 func Benchmark_GenOneChineseChars(t *testing.B) {
@@ -26,12 +30,18 @@ func Benchmark_GenOneChineseChars(t *testing.B) {
 
 func Benchmark_GenFixedLengthChineseChars(t *testing.B) {
 	for i := 0; i < t.N; i++ {
+		util.GenFixedLengthChineseChars(100)
+	}
+}
+
+func Benchmark_GenRandomLengthChineseChars(t *testing.B) {
+	for i := 0; i < t.N; i++ {
 		util.GenRandomLengthChineseChars(0, 100)
 	}
 }
 
 func Benchmark_OneOddChar(t *testing.B) {
 	for i := 0; i < t.N; i++ {
-		util.OneOddChar()
+		util.GenOneOddChar()
 	}
 }
