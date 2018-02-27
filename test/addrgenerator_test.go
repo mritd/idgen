@@ -20,7 +20,6 @@ func Benchmark_GenProvinceAndCity(t *testing.B) {
 	}
 }
 
-
 func Benchmark_AddrGenerate(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		generator.AddrGenerate()
