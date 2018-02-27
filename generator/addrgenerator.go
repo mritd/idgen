@@ -8,7 +8,7 @@ import (
 
 // 随机省/城市
 func GenProvinceAndCity() string {
-	return metadata.ProvinceCity[util.RandInt(0,len(metadata.ProvinceCity))]
+	return metadata.ProvinceCity[util.RandInt(0, len(metadata.ProvinceCity))]
 }
 
 // 随机地址生成

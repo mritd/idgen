@@ -26,7 +26,7 @@ func GenRandomLengthChineseChars(start, end int) string {
 }
 
 // 随机单个复杂中文字符
-func GetOneOddChar() string{
+func OneOddChar() string {
 	rand.Seed(time.Now().UnixNano())
 	return string([]rune(metadata.ODD_CHINESE_CHARS)[rand.Intn(len([]rune(metadata.ODD_CHINESE_CHARS)))])
 }
