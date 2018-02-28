@@ -1,0 +1,14 @@
+os:
+  - linux
+  - osx
+  - windows
+
+language: go
+
+go:
+  - 1.8.x
+  - 1.9.x
+  - 1.10.x
+
+script:
+  - go test -cpu=1,2 -v "./..." -test.bench ".*"
