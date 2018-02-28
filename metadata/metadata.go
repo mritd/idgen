@@ -20,7 +20,7 @@
 
 package metadata
 
-var DomainSuffix = []string{
+var DomainSuffix = [...]string{
 	".biz",
 	".cloud",
 	".club",
@@ -39,7 +39,7 @@ var DomainSuffix = []string{
 	".xyz",
 }
 
-var MobilePrefix = []string{
+var MobilePrefix = [...]string{
 	"130",
 	"131",
 	"132",
@@ -77,11 +77,11 @@ var MobilePrefix = []string{
 	"189",
 }
 
-var ValCodeArr = [11]string{
+var ValCodeArr = [...]string{
 	"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2",
 }
 
-var Wi = [17]int{
+var Wi = [...]int{
 	7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2,
 }
 
@@ -123,7 +123,7 @@ var AreaCodeMap = map[string]string{
 	"91": "国外",
 }
 
-var AreaCode = []string{
+var AreaCode = [...]string{
 	"11",
 	"12",
 	"13",
@@ -161,7 +161,7 @@ var AreaCode = []string{
 	"91",
 }
 
-var ProvinceCity = [345]string{
+var ProvinceCity = [...]string{
 	"黑龙江省齐齐哈尔市",
 	"黑龙江省黑河市",
 	"黑龙江省鹤岗市",
@@ -509,7 +509,7 @@ var ProvinceCity = [345]string{
 	"上海市上海市",
 }
 
-var CityName = [339]string{
+var CityName = [...]string{
 	"北京市",
 	"上海市",
 	"天津市",
@@ -851,7 +851,7 @@ var CityName = [339]string{
 	"阿勒泰地区",
 }
 
-var LastName = []string{
+var LastName = [...]string{
 	"李", "王", "张", "刘", "陈", "杨", "黄", "赵", "周", "吴", "徐", "孙", "朱", "马",
 	"胡", "郭", "林", "何", "高", "梁", "郑", "罗", "宋", "谢", "唐", "韩", "曹", "许",
 	"邓", "萧", "冯", "曾", "程", "蔡", "彭", "潘", "袁", "於", "董", "余", "苏", "叶",
@@ -1004,7 +1004,7 @@ var OddChineseChars = "厷厸厹厺厼厽厾叀叁参叄叅叆叇亝収叏叐叒
 	"猥猦猧猨猬猭猰猱猲猳猵犹猷猸猹猺狲猼猽猾獀犸獂獆獇獈獉獊獋獌獍獏獐獑獒獓獔獕獖獗獘獙獚獛獜獝獞獟獠獡獢" +
 	"獣獤獥獦獧獩狯猃獬獭狝獯狞獱獳獴獶獹獽獾獿猡玁玂玃"
 
-var ChineseChars = []string{
+var ChineseChars = [...]string{
 	"阿", "埃", "挨", "哎", "唉", "哀", "皑", "癌", "蔼", "矮",
 	"艾", "碍", "爱", "隘", "鞍", "氨", "安", "俺", "按", "暗",
 	"岸", "胺", "案", "肮", "昂", "盎", "凹", "敖", "熬", "翱",
