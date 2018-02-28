@@ -7,13 +7,14 @@
 
 ## 安装
 
-安装请直接从 release 页下载预编译的二进制文件，并放到 PATH 下即可；docker 镜像的 Dockerfile 正在写，马上就有
+安装请直接从 release 页下载预编译的二进制文件，并放到 PATH 下即可；
+docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像
 
-## 运行
+## 运行模式
 
 **该工具目前支持两种运行方式:**
 
-### 直接运行
+### 终端模式
 
 直接命令行运行二进制文件即可生成对应信息，生成后将自动复制到系统剪切板
 
@@ -65,9 +66,11 @@ Usage:
 Flags:
   -h, --help            help for server
   -l, --listen string   http 监听地址 (default "0.0.0.0")
-  -m, --mode string     server 运行模式(http/json)
+  -m, --mode string     server 运行模式(html/json)
   -p, --port int        http 监听端口 (default 8080)
 
 Global Flags:
       --config string   config file (default is $HOME/.idgen.yaml)
 ```
+
+docker 用户直接运行 `docker run -d -p 8080:8080 mritd/idgen` 即可
