@@ -40,7 +40,7 @@ Use "idgen [command] --help" for more information about a command.
 
 ### 服务器模式
 
-使用 `server` 子命令将启动一个带有 html 页面的 http 服务器用于浏览器访问，
+使用 `server` 子命令将启动一个带有页面的 http 服务器用于浏览器访问，
 同时还会启动一个 json api 接口用于其他程序调用
 
 ``` sh
