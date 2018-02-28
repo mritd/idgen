@@ -77,3 +77,47 @@ func RandInt64(min, max int64) int64 {
 	rand.Seed(time.Now().UnixNano())
 	return min + rand.Int63n(max-min)
 }
+
+// CardBin Metadata 生成(仅供测试生成代码)
+//func CreateCardBinMetadata(){
+//
+//	f,_:=os.Open("../resources/cardBin")
+//	r:=bufio.NewReader(f)
+//
+//	name:=""
+//	length:= 0
+//	cardType :=""
+//	prefixes := []int{}
+//	t,_:=template.ParseFiles("../resources/cardBin.tpl")
+//	for  {
+//		s,err:= r.ReadString('\n')
+//		if err == io.EOF {
+//			break
+//		}
+//		strs:=strings.Fields(s)
+//		if name == strs[0] {
+//			cardBin,_:=strconv.Atoi(strs[1])
+//			prefixes = append(prefixes,cardBin)
+//		}else {
+//
+//			if name!="" {
+//				c:=metadata.CardBin{
+//					Name:     name,
+//					Length:   length,
+//					CardType: cardType,
+//					Prefixes: prefixes,
+//				}
+//				data,_:=os.OpenFile("../resources/metadata_code",os.O_CREATE|os.O_RDWR|os.O_APPEND,0644)
+//				t.Execute(data,c)
+//				prefixes = prefixes[:0]
+//			}
+//
+//
+//			name= strs[0]
+//			length,_=strconv.Atoi(strs[2])
+//			cardType=strs[3]
+//			cardBin,_:=strconv.Atoi(strs[1])
+//			prefixes = append(prefixes,cardBin)
+//		}
+//	}
+//}

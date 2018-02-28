@@ -22,6 +22,11 @@ func Test_OneOddChar(t *testing.T) {
 	fmt.Println(util.GenOneOddChar())
 }
 
+// 开发时 CardBin 生成测试
+//func Test_CreateCardBinMetadata(t *testing.T) {
+//	util.CreateCardBinMetadata()
+//}
+
 func Benchmark_GenOneChineseChars(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		util.GenOneChineseChars()
