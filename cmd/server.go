@@ -22,35 +22,34 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
 
 	"github.com/spf13/cobra"
 )
 
-// bankCmd represents the bank command
-var bankCmd = &cobra.Command{
-	Use:   "bank",
-	Short: "生成银行卡号",
+// serverCmd represents the server command
+var serverCmd = &cobra.Command{
+	Use:   "server",
+	Short: "启动 http server",
 	Long: `
-生成中国大部分银行的银行卡号`,
+启动一个简单的 http server 用于提供页面访问以及 json 数据返回
+
+http://BINDADDR:PORT/        返回一个简单的 html 页面
+http://BINDADDR:PORT/api     返回 json 格式数据`,
 	Run: func(cmd *cobra.Command, args []string) {
-		bank := generator.BankGenerate()
-		fmt.Println(bank)
-		clipboard.WriteAll(bank)
+		fmt.Println("server called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(bankCmd)
+	rootCmd.AddCommand(serverCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// bankCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// serverCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// bankCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

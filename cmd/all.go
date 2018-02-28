@@ -32,7 +32,8 @@ import (
 var allCmd = &cobra.Command{
 	Use:   "all",
 	Short: "生成所有信息",
-	Long:  `生成本工具支持的所有信息`,
+	Long:  `
+生成本工具支持的所有信息`,
 	Run: func(cmd *cobra.Command, args []string) {
 		name := generator.NameGenerate()
 		idno := generator.IDCardGenerate()

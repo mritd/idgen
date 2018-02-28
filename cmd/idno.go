@@ -32,7 +32,8 @@ import (
 var idnoCmd = &cobra.Command{
 	Use:   "idno",
 	Short: "生成身份证号",
-	Long:  `生成中国大陆十八位身份证号`,
+	Long:  `
+生成中国大陆十八位身份证号`,
 	Run: func(cmd *cobra.Command, args []string) {
 		idno := generator.IDCardGenerate()
 		fmt.Println(idno)
