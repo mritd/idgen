@@ -1,12 +1,9 @@
 os:
   - linux
-  - osx
 
 language: go
 
 go:
-  - 1.8.x
-  - 1.9.x
   - 1.10.x
 
 env:
@@ -17,7 +14,7 @@ before_install:
   - go get github.com/tcnksm/ghr
 
 script:
-  - go test -cpu=1,2 -v "./..." -test.bench ".*"
+  - go test -v "./..." -test.bench ".*"
 
 after_success:
   - gox -cgo=0 -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
