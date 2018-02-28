@@ -9,6 +9,10 @@ go:
 env:
   - "PATH=/home/travis/gopath/bin:$PATH"
 
+branches:
+  only:
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+
 before_install:
   - go get github.com/inconshreveable/mousetrap
   - go get github.com/mitchellh/gox
