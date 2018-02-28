@@ -22,34 +22,34 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/atotto/clipboard"
 	"github.com/mritd/idgen/generator"
+
 	"github.com/spf13/cobra"
 )
 
-// addrCmd represents the addr command
-var addrCmd = &cobra.Command{
-	Use:   "addr",
-	Short: "生成地址",
-	Long:  `随机生成中国大陆地址信息`,
+// bankCmd represents the bank command
+var bankCmd = &cobra.Command{
+	Use:   "bank",
+	Short: "生成银行卡号",
+	Long: `随机生成中国大部分银行的银行卡号`,
 	Run: func(cmd *cobra.Command, args []string) {
-		addr := generator.AddrGenerate()
-		fmt.Println(addr)
-		clipboard.WriteAll(addr)
+		bank := generator.BankGenerate()
+		fmt.Println(bank)
+		clipboard.WriteAll(bank)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addrCmd)
+	rootCmd.AddCommand(bankCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// addrCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// bankCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addrCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// bankCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

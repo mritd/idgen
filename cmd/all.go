@@ -37,14 +37,16 @@ var allCmd = &cobra.Command{
 		name := generator.NameGenerate()
 		idno := generator.IDCardGenerate()
 		mobile := generator.MobileGenerate()
+		bank := generator.BankGenerate()
 		email := generator.EmailGenerate()
 		addr := generator.AddrGenerate()
 		fmt.Println(name)
 		fmt.Println(idno)
 		fmt.Println(mobile)
+		fmt.Println(bank)
 		fmt.Println(email)
 		fmt.Println(addr)
-		clipboard.WriteAll(name + "\n" + idno + "\n" + mobile + "\n" + email + "\n" + addr)
+		clipboard.WriteAll(name + "\n" + idno + "\n" + mobile + "\n" + bank + "\n" + email + "\n" + addr)
 	},
 }
 
