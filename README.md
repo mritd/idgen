@@ -1,5 +1,7 @@
 ## idgen
 
+[![Build Status](https://travis-ci.org/mritd/idgen.svg?branch=master)](https://travis-ci.org/mritd/idgen)
+
 > 一个使用 golang 编写的大陆身份证生成器，目前支持生成 姓名、身份证号、手机号、银行卡号、电子邮箱、地址信息
 
 ## 运行
