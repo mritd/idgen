@@ -55,7 +55,7 @@ http://BINDADDR:PORT/api     返回 json 格式数据`,
 
 func init() {
 	rootCmd.AddCommand(serverCmd)
-	mode = serverCmd.PersistentFlags().StringP("mode", "m", "", "server 运行模式(http/json)")
+	mode = serverCmd.PersistentFlags().StringP("mode", "m", "", "server 运行模式(html/json)")
 	listen = serverCmd.PersistentFlags().StringP("listen", "l", "0.0.0.0", "http 监听地址")
 	port = serverCmd.PersistentFlags().IntP("port", "p", 8080, "http 监听端口")
 
