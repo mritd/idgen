@@ -41,9 +41,9 @@ var rootCmd = &cobra.Command{
 该工具用于生成中国大陆 姓名 身份证号 银行卡号 手机号 地址 Email
 生成后自动复制相应文本到系统剪切板，不使用子命令则默认生成身份证号`,
 	Run: func(cmd *cobra.Command, args []string) {
-		idno := generator.IDCardGenerate()
-		fmt.Println(idno)
-		clipboard.WriteAll(idno)
+		idNo := generator.IDCardGenerate()
+		fmt.Println(idNo)
+		clipboard.WriteAll(idNo)
 	},
 }
 

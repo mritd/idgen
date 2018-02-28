@@ -32,7 +32,7 @@ import (
 var nameCmd = &cobra.Command{
 	Use:   "name",
 	Short: "生成姓名",
-	Long:  `
+	Long: `
 生成中文姓名，长度为 2-4 位(包含复姓)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		name := generator.NameGenerate()
