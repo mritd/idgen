@@ -54,18 +54,9 @@ http://BINDADDR:PORT/api     返回 json 格式数据`,
 }
 
 func init() {
+
 	rootCmd.AddCommand(serverCmd)
 	mode = serverCmd.PersistentFlags().StringP("mode", "m", "", "server 运行模式(html/json)")
 	listen = serverCmd.PersistentFlags().StringP("listen", "l", "0.0.0.0", "http 监听地址")
 	port = serverCmd.PersistentFlags().IntP("port", "p", 8080, "http 监听端口")
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// serverCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
