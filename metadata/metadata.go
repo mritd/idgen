@@ -20,14 +20,9 @@
 
 package metadata
 
-type CardBin struct {
-	Name     string
-	Length   int
-	CardType string
-	Prefixes []int
-}
+import "github.com/mritd/idgen/models"
 
-var CardBins = [...]CardBin{
+var CardBins = [...]models.CardBin{
 	{
 		"工商银行",
 		19,
