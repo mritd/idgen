@@ -9,5 +9,16 @@ go:
   - 1.9.x
   - 1.10.x
 
+env:
+  - "PATH=/home/travis/gopath/bin:$PATH"
+
+before_install:
+  - go get github.com/mitchellh/gox
+  - go get github.com/tcnksm/ghr
+
 script:
   - go test -cpu=1,2 -v "./..." -test.bench ".*"
+
+after_success:
+  - gox -cgo=0 -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+  - ghr -u mritd -t $GITHUB_TOKEN -replace -recreate --prerelease --debug `cat VERSION` dist/
