@@ -18,10 +18,6 @@ func Test_GenRandomLengthChineseChars(t *testing.T) {
 	fmt.Println(util.GenRandomLengthChineseChars(0, 100))
 }
 
-func Test_OneOddChar(t *testing.T) {
-	fmt.Println(util.GenOneOddChar())
-}
-
 // 开发时 CardBin 生成测试
 //func Test_CreateCardBinMetadata(t *testing.T) {
 //	util.CreateCardBinMetadata()
@@ -42,11 +38,5 @@ func Benchmark_GenFixedLengthChineseChars(t *testing.B) {
 func Benchmark_GenRandomLengthChineseChars(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		util.GenRandomLengthChineseChars(0, 100)
-	}
-}
-
-func Benchmark_OneOddChar(t *testing.B) {
-	for i := 0; i < t.N; i++ {
-		util.GenOneOddChar()
 	}
 }

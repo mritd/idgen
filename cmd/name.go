@@ -43,10 +43,4 @@ var nameCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(nameCmd)
-	nameCmd.Flags().BoolP("odd", "o", false, "生成复杂(带有生僻字)姓名")
-	nameCmd.Run = func(cmd *cobra.Command, args []string) {
-		name := generator.NameGenerateOdd()
-		fmt.Println(name)
-		clipboard.WriteAll(name)
-	}
 }

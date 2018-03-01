@@ -31,12 +31,6 @@ func GenOneChineseChars() string {
 	return metadata.ChineseChars[RandInt(0, len(metadata.ChineseChars))]
 }
 
-// 随机单个复杂中文字符
-func GenOneOddChar() string {
-	rand.Seed(time.Now().UnixNano())
-	return string([]rune(metadata.OddChineseChars)[rand.Intn(len([]rune(metadata.OddChineseChars)))])
-}
-
 // 指定长度随机中文字符(包含复杂字符)
 func GenFixedLengthChineseChars(length int) string {
 	strRune := make([]rune, length)

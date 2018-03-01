@@ -29,8 +29,3 @@ import (
 func NameGenerate() string {
 	return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenRandomLengthChineseChars(1, 3)
 }
-
-// 生成带有生僻字的姓名
-func NameGenerateOdd() string {
-	return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenOneOddChar()
-}
