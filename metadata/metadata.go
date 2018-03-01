@@ -22,6 +22,8 @@ package metadata
 
 import "github.com/mritd/idgen/models"
 
+const VERSION = "v0.0.2"
+
 const HtmlTpl = `<!DOCTYPE html>
 <html lang="zh">
 <head>
