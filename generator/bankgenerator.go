@@ -22,10 +22,11 @@ package generator
 
 import (
 	"fmt"
-	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/util"
 	"math"
 	"strconv"
+
+	"github.com/mritd/idgen/metadata"
+	"github.com/mritd/idgen/util"
 )
 
 // 随机生成银行卡号
@@ -33,6 +34,6 @@ func BankGenerate() string {
 	bank := metadata.CardBins[util.RandInt(0, len(metadata.CardBins))]
 	prefixes := bank.Prefixes
 	cardNoLength := bank.Length
-	return strconv.Itoa(prefixes[util.RandInt(0, len(prefixes))]) + fmt.Sprintf("%0*d", cardNoLength-6, util.RandInt(0, int(math.Pow(10, float64(cardNoLength-6)))))
+	return strconv.Itoa(prefixes[util.RandInt(0, len(prefixes))]) + fmt.Sprintf("%0*d", cardNoLength-6, util.RandInt64(0, int64(math.Pow10(cardNoLength-6))))
 
 }
