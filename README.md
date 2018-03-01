@@ -19,7 +19,7 @@ docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像
 直接命令行运行二进制文件即可生成对应信息，生成后将自动复制到系统剪切板
 
 ``` sh
-➜  ~ idgen -h
+➜  idgen git:(master) idgen -h
 
 该工具用于生成中国大陆 姓名 身份证号 银行卡号 手机号 地址 Email
 生成后自动复制相应文本到系统剪切板，不使用子命令则默认生成身份证号
@@ -38,10 +38,12 @@ Available Commands:
   mobile      生成手机号
   name        生成姓名
   server      启动 http server
+  version     显示当前版本
 
 Flags:
       --config string   config file (default is $HOME/.idgen.yaml)
   -h, --help            help for idgen
+  -v, --version         显示当前版本
 
 Use "idgen [command] --help" for more information about a command.
 ```
@@ -52,7 +54,7 @@ Use "idgen [command] --help" for more information about a command.
 同时还会启动一个 json api 接口用于其他程序调用
 
 ``` sh
-➜  ~ idgen server -h
+➜  idgen git:(master) idgen server -h
 
 启动一个简单的 http server 用于提供页面访问以及 json 数据返回，
 当不指定 -m 选项则同时开启 html 和 json 支持，访问地址如下:
@@ -71,6 +73,7 @@ Flags:
 
 Global Flags:
       --config string   config file (default is $HOME/.idgen.yaml)
+  -v, --version         显示当前版本
 ```
 
 docker 用户直接运行 `docker run -d -p 8080:8080 mritd/idgen` 即可
