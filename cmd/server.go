@@ -21,11 +21,10 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/mritd/idgen/server"
+	"github.com/mritd/idgen/util"
 	"github.com/spf13/cobra"
 	"net"
-	"os"
 	"strconv"
 )
 
@@ -45,10 +44,7 @@ http://BINDADDR:PORT/        返回一个简单的 html 页面
 http://BINDADDR:PORT/api     返回 json 格式数据`,
 	Run: func(cmd *cobra.Command, args []string) {
 		tcpAddr, err := net.ResolveTCPAddr("tcp", *listen+":"+strconv.Itoa(*port))
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+		util.CheckAndExit(err)
 		server.Start(*mode, tcpAddr)
 	},
 }

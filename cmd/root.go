@@ -28,6 +28,7 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/mitchellh/go-homedir"
 	"github.com/mritd/idgen/generator"
+	"github.com/mritd/idgen/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -81,10 +82,7 @@ func initConfig() {
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+		util.CheckAndExit(err)
 
 		// Search config in home directory with name ".idgen" (without extension).
 		viper.AddConfigPath(home)

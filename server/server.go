@@ -26,10 +26,10 @@ import (
 	"github.com/mritd/idgen/generator"
 	"github.com/mritd/idgen/metadata"
 	"github.com/mritd/idgen/models"
+	"github.com/mritd/idgen/util"
 	"html/template"
 	"net"
 	"net/http"
-	"os"
 )
 
 func Start(mode string, addr net.Addr) {
@@ -48,28 +48,18 @@ func Start(mode string, addr net.Addr) {
 	}
 
 	err := http.ListenAndServe(addr.String(), nil)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	util.CheckAndExit(err)
 }
 
 func htmlServer(w http.ResponseWriter, _ *http.Request) {
 	tpl, err := template.New("htmlTpl").Parse(metadata.HtmlTpl)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	util.CheckAndExit(err)
 	tpl.Execute(w, gen())
 }
 
 func jsonServer(w http.ResponseWriter, _ *http.Request) {
-
 	b, err := json.Marshal(gen())
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	util.CheckAndExit(err)
 	fmt.Fprintf(w, string(b))
 }
 
