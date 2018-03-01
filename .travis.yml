@@ -1,22 +1,16 @@
 os:
   - linux
+  - osx
 
 language: go
 
 go:
+  - 1.8.x
+  - 1.9.x
   - 1.10.x
-
-env:
-  - "PATH=/home/travis/gopath/bin:$PATH"
 
 before_install:
   - go get github.com/inconshreveable/mousetrap
-  - go get github.com/mitchellh/gox
-  - go get github.com/tcnksm/ghr
 
 script:
   - go test -v "./..." -test.bench ".*"
-
-after_success:
-  - gox -cgo=0 -osarch="darwin/amd64 linux/386 linux/amd64 windows/386 windows/amd64" -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
-  - ghr -u mritd -t $GITHUB_TOKEN -replace -recreate --prerelease --debug `cat VERSION` dist/
