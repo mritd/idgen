@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/mritd/idgen/util"
 	"testing"
+	_ "github.com/mritd/idgen/statik"
 )
 
 func Test_GenOneChineseChars(t *testing.T) {
@@ -16,6 +17,10 @@ func Test_GenFixedLengthChineseChars(t *testing.T) {
 
 func Test_GenRandomLengthChineseChars(t *testing.T) {
 	fmt.Println(util.GenRandomLengthChineseChars(0, 100))
+}
+
+func Test_GenFirstName(t *testing.T) {
+	util.GenFirstName()
 }
 
 // 开发时 CardBin 生成测试

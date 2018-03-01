@@ -24,6 +24,9 @@ import (
 	"github.com/mritd/idgen/metadata"
 	"math/rand"
 	"time"
+	"io/ioutil"
+	"github.com/rakyll/statik/fs"
+	"strings"
 )
 
 // 随机单个中文字符
@@ -43,11 +46,23 @@ func GenFixedLengthChineseChars(length int) string {
 // 指定范围随机中文字符
 func GenRandomLengthChineseChars(start, end int) string {
 	length := RandInt(start, end)
-	tmp := ""
-	for i := 0; i < length; i++ {
-		tmp += GenOneChineseChars()
-	}
-	return tmp
+    return GenFixedLengthChineseChars(length)
+	//tmp := ""
+	//for i := 0; i < length; i++ {
+	//	tmp += GenOneChineseChars()
+	//}
+	//return tmp
+}
+
+// 随机生成名字(目前性能很低)
+func GenFirstName() string{
+	statikFS, err := fs.New()
+	CheckAndExit(err)
+	f, err := statikFS.Open("/fname")
+	b,err:=ioutil.ReadAll(f)
+	CheckAndExit(err)
+	fname:=strings.Fields(string(b))
+	return fname[RandInt(0,len(fname))]
 }
 
 // 随机英文小写字母

@@ -16,4 +16,6 @@
 idgen*
 .idea
 dist
+statik
 resources/metadata_code
+resources/fname

@@ -18,10 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+//go:generate statik -src=./resources
+//go:generate go fmt statik/statik.go
 package main
 
-import "github.com/mritd/idgen/cmd"
+import (
+    "github.com/mritd/idgen/cmd"
+    _ "github.com/mritd/idgen/statik"
+)
 
 func main() {
-	cmd.Execute()
+    cmd.Execute()
 }
