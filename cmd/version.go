@@ -34,7 +34,7 @@ var versionCmd = &cobra.Command{
 	Long: `
 显示当前版本`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(metadata.VERSION)
+		fmt.Println("idgen:", metadata.VERSION)
 	},
 }
 

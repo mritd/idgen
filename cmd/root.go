@@ -22,16 +22,19 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/mritd/idgen/metadata"
 	"os"
 
 	"github.com/atotto/clipboard"
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/mritd/idgen/generator"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+
+var version bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -41,9 +44,13 @@ var rootCmd = &cobra.Command{
 该工具用于生成中国大陆 姓名 身份证号 银行卡号 手机号 地址 Email
 生成后自动复制相应文本到系统剪切板，不使用子命令则默认生成身份证号`,
 	Run: func(cmd *cobra.Command, args []string) {
-		idNo := generator.IDCardGenerate()
-		fmt.Println(idNo)
-		clipboard.WriteAll(idNo)
+		if version {
+			fmt.Println("idgen:", metadata.VERSION)
+		} else {
+			idNo := generator.IDCardGenerate()
+			fmt.Println(idNo)
+			clipboard.WriteAll(idNo)
+		}
 	},
 }
 
@@ -63,6 +70,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.idgen.yaml)")
+	rootCmd.PersistentFlags().BoolVarP(&version, "version", "v", false, "显示当前版本")
 }
 
 // initConfig reads in config file and ENV variables if set.
