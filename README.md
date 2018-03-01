@@ -3,12 +3,18 @@
 [![Build Status](https://travis-ci.org/mritd/idgen.svg?branch=master)](https://travis-ci.org/mritd/idgen)
 
 > 一个使用 golang 编写的大陆身份证生成器，目前支持生成 姓名、身份证号、手机号、银行卡号、电子邮箱、地址信息
+该工具部分代码从 [java-testdata-generator](https://github.com/binarywang/java-testdata-generator) 翻译而来，在此感谢原作者
 
-## 运行
+## 安装
+
+安装请直接从 release 页下载预编译的二进制文件，并放到 PATH 下即可；
+docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像
+
+## 运行模式
 
 **该工具目前支持两种运行方式:**
 
-### 直接运行
+### 终端模式
 
 直接命令行运行二进制文件即可生成对应信息，生成后将自动复制到系统剪切板
 
@@ -60,9 +66,11 @@ Usage:
 Flags:
   -h, --help            help for server
   -l, --listen string   http 监听地址 (default "0.0.0.0")
-  -m, --mode string     server 运行模式(http/json)
+  -m, --mode string     server 运行模式(html/json)
   -p, --port int        http 监听端口 (default 8080)
 
 Global Flags:
       --config string   config file (default is $HOME/.idgen.yaml)
 ```
+
+docker 用户直接运行 `docker run -d -p 8080:8080 mritd/idgen` 即可
