@@ -2,9 +2,9 @@ package test
 
 import (
 	"fmt"
+	_ "github.com/mritd/idgen/statik"
 	"github.com/mritd/idgen/util"
 	"testing"
-	_ "github.com/mritd/idgen/statik"
 )
 
 func Test_GenOneChineseChars(t *testing.T) {

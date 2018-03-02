@@ -23,10 +23,10 @@
 package main
 
 import (
-    "github.com/mritd/idgen/cmd"
-    _ "github.com/mritd/idgen/statik"
+	"github.com/mritd/idgen/cmd"
+	//_ "github.com/mritd/idgen/statik"
 )
 
 func main() {
-    cmd.Execute()
+	cmd.Execute()
 }

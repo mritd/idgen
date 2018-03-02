@@ -31,9 +31,46 @@ import (
 
 // 随机生成银行卡号
 func BankGenerate() string {
-	bank := metadata.CardBins[util.RandInt(0, len(metadata.CardBins))]
-	prefixes := bank.Prefixes
-	cardNoLength := bank.Length
-	return strconv.Itoa(prefixes[util.RandInt(0, len(prefixes))]) + fmt.Sprintf("%0*d", cardNoLength-6, util.RandInt64(0, int64(math.Pow10(cardNoLength-6))))
 
+	// 随机选中银行卡卡头
+	bank := metadata.CardBins[util.RandInt(0, len(metadata.CardBins))]
+
+	// 获取 卡前缀(cardBin)
+	prefixes := bank.Prefixes
+
+	// 获取当前银行卡正确长度
+	cardNoLength := bank.Length
+
+	// 生成 长度-1 位卡号
+	preCardNo := strconv.Itoa(prefixes[util.RandInt(0, len(prefixes))]) + fmt.Sprintf("%0*d", cardNoLength-7, util.RandInt64(0, int64(math.Pow10(cardNoLength-7))))
+
+	// LUHN 算法处理
+	return LUHNProcess(preCardNo)
+
+}
+
+func LUHNProcess(preCardNo string) string {
+
+	checkSum := 0
+
+	for i, s := range preCardNo {
+
+		tmp, err := strconv.Atoi(string(s))
+		util.CheckAndExit(err)
+
+		// 由于卡号实际少了一位，所以 i%2 != 0 实际上是偶数位
+		if i%2 != 0 {
+			if tmp*2 > 10 {
+				tmp -= 9
+			}
+		}
+		checkSum += tmp
+	}
+
+	if checkSum%10 != 0 {
+		return preCardNo + strconv.Itoa(10-checkSum%10)
+	} else {
+		fmt.Println("Bank No reGenerate!")
+		return BankGenerate()
+	}
 }
