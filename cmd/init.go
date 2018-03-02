@@ -18,12 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package main
+package cmd
 
 import (
-	"github.com/mritd/idgen/cmd"
+	"github.com/mritd/idgen/util"
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	cmd.Execute()
+// initCmd represents the init command
+var initCmd = &cobra.Command{
+	Use:   "init",
+	Short: "初始化配置",
+	Long: `
+初始化基本配置，如从网络下载用于生成姓名的 SQLite 数据库等`,
+	Run: func(cmd *cobra.Command, args []string) {
+		util.InitDB()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(initCmd)
 }

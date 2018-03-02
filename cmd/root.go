@@ -31,6 +31,7 @@ import (
 	"github.com/mritd/idgen/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"path/filepath"
 )
 
 var cfgFile string
@@ -70,7 +71,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.idgen.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.idgen/idgen.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&version, "version", "v", false, "显示当前版本")
 }
 
@@ -85,8 +86,8 @@ func initConfig() {
 		util.CheckAndExit(err)
 
 		// Search config in home directory with name ".idgen" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".idgen")
+		viper.AddConfigPath(home + string(filepath.Separator) + ".idgen")
+		viper.SetConfigName("idgen")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

@@ -27,5 +27,11 @@ import (
 
 // 生成姓名
 func NameGenerate() string {
-	return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenRandomLengthChineseChars(1, 3)
+	if util.DBExist() {
+		var firstName string
+		util.CheckAndExit(util.DB().QueryRow(util.FirstNameSQL, util.RandInt(0, util.FirstNameSum)).Scan(&firstName))
+		return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + firstName
+	} else {
+		return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenRandomLengthChineseChars(1, 3)
+	}
 }
