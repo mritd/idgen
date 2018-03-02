@@ -19,9 +19,9 @@ func Test_GenRandomLengthChineseChars(t *testing.T) {
 	fmt.Println(util.GenRandomLengthChineseChars(0, 100))
 }
 
-func Test_GenFirstName(t *testing.T) {
-	util.GenFirstName()
-}
+//func Test_GenFirstName(t *testing.T) {
+//	util.GenFirstName()
+//}
 
 // 开发时 CardBin 生成测试
 //func Test_CreateCardBinMetadata(t *testing.T) {

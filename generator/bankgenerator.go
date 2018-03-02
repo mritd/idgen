@@ -49,28 +49,38 @@ func BankGenerate() string {
 
 }
 
+// LUHN 合成卡号
 func LUHNProcess(preCardNo string) string {
 
 	checkSum := 0
-
-	for i, s := range preCardNo {
+	tmpCardNo := util.ReverseString(preCardNo)
+	for i, s := range tmpCardNo {
 
 		tmp, err := strconv.Atoi(string(s))
 		util.CheckAndExit(err)
 
-		// 由于卡号实际少了一位，所以 i%2 != 0 实际上是偶数位
-		if i%2 != 0 {
-			if tmp*2 > 10 {
-				tmp -= 9
+		// 由于卡号实际少了一位，所以反转后卡号第一位一定为偶数位
+		// 同时 i 正好也是偶数，此时 i 将和卡号奇偶位同步
+		if i%2 == 0 {
+			// 偶数位 *2 是否为两位数(>9)
+			if tmp*2 > 9 {
+				// 如果为两位数则 -9
+				checkSum += tmp*2 - 9
+			} else {
+				// 否则直接相加即可
+				checkSum += tmp * 2
 			}
+		} else {
+			// 奇数位直接相加
+			checkSum += tmp
 		}
-		checkSum += tmp
 	}
 
 	if checkSum%10 != 0 {
 		return preCardNo + strconv.Itoa(10-checkSum%10)
 	} else {
-		fmt.Println("Bank No reGenerate!")
+		// 如果不巧生成的前 卡长度-1 位正好符合 LUHN 算法
+		// 那么需要递归重新生成(需要符合 cardBind 中卡号长度)
 		return BankGenerate()
 	}
 }
