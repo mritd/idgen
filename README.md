@@ -8,7 +8,13 @@
 ## 安装
 
 安装请直接从 release 页下载预编译的二进制文件，并放到 PATH 下即可；
-docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像
+docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像；
+
+- **自行编译**
+
+注意: 由于本项目采用了 [SQLite3](https://github.com/mattn/go-sqlite3)，所以编译需要开启
+cgo 支持(`CGO_ENABLE=1`),否则将会导致在使用 `idgen name` 命令同时存在 `~/.idgen/data.db`
+文件时出现 SQLite3 初始化错误
 
 ## 运行模式
 
@@ -19,7 +25,7 @@ docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像
 直接命令行运行二进制文件即可生成对应信息，生成后将自动复制到系统剪切板
 
 ``` sh
-➜  idgen git:(master) idgen -h
+➜  ~ idgen -h
 
 该工具用于生成中国大陆 姓名 身份证号 银行卡号 手机号 地址 Email
 生成后自动复制相应文本到系统剪切板，不使用子命令则默认生成身份证号
@@ -35,13 +41,14 @@ Available Commands:
   email       生成 Email
   help        Help about any command
   idno        生成身份证号
+  init        初始化配置
   mobile      生成手机号
   name        生成姓名
   server      启动 http server
   version     显示当前版本
 
 Flags:
-      --config string   config file (default is $HOME/.idgen.yaml)
+      --config string   config file (default is $HOME/.idgen/idgen.yaml)
   -h, --help            help for idgen
   -v, --version         显示当前版本
 
@@ -54,7 +61,7 @@ Use "idgen [command] --help" for more information about a command.
 同时还会启动一个 json api 接口用于其他程序调用
 
 ``` sh
-➜  idgen git:(master) idgen server -h
+➜  ~ idgen server -h
 
 启动一个简单的 http server 用于提供页面访问以及 json 数据返回，
 当不指定 -m 选项则同时开启 html 和 json 支持，访问地址如下:
@@ -72,8 +79,15 @@ Flags:
   -p, --port int        http 监听端口 (default 8080)
 
 Global Flags:
-      --config string   config file (default is $HOME/.idgen.yaml)
+      --config string   config file (default is $HOME/.idgen/idgen.yaml)
   -v, --version         显示当前版本
 ```
 
 docker 用户直接运行 `docker run -d -p 8080:8080 mritd/idgen` 即可
+
+### 关于姓名生成
+
+v0.0.3 版本增加 sqlite 数据库支持，目前该数据库中存放了大量抓取的名字信息，工具在生成姓名
+时将**自动检测 `~/.idgen/data.db` 是否存在，如果存在将会自动从中进行随机姓名生成**；此种
+方式生成的姓名更加真实，但是由于数据量比较大(db文件 11MB)，**所以默认该数据库不包含在 release**
+文件中，需要使用 `idgen init` 命令初始化(自动从 github 下载)
