@@ -21,9 +21,9 @@
 package generator
 
 import (
+	"database/sql"
 	"github.com/mritd/idgen/metadata"
 	"github.com/mritd/idgen/util"
-	"database/sql"
 )
 
 // 生成姓名
