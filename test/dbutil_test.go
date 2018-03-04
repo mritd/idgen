@@ -2,7 +2,6 @@ package test
 
 import (
 	"fmt"
-	_ "github.com/mritd/idgen/statik"
 	"github.com/mritd/idgen/util"
 	"testing"
 )

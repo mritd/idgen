@@ -22,15 +22,15 @@ func DBPath() string {
 	return home + string(filepath.Separator) + ".idgen/data.db"
 }
 
-func InitConfigDir(){
-    home, err := homedir.Dir()
-    CheckAndExit(err)
-    ConfigDir :=home + string(filepath.Separator) + ".idgen"
-    _,err=os.Stat(ConfigDir)
-    if err!=nil {
-        err = os.MkdirAll(ConfigDir,0711)
-        CheckAndExit(err)
-    }
+func InitConfigDir() {
+	home, err := homedir.Dir()
+	CheckAndExit(err)
+	ConfigDir := home + string(filepath.Separator) + ".idgen"
+	_, err = os.Stat(ConfigDir)
+	if err != nil {
+		err = os.MkdirAll(ConfigDir, 0711)
+		CheckAndExit(err)
+	}
 }
 
 func DBExist() bool {
@@ -45,7 +45,7 @@ func DB() *sql.DB {
 }
 
 func InitDB() {
-    InitConfigDir()
+	InitConfigDir()
 	res, err := http.Get(metadata.DB_DOWNLOAD_URL)
 	CheckAndExit(err)
 	db, err := os.OpenFile(DBPath(), os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
