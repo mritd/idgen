@@ -23,13 +23,17 @@ package generator
 import (
 	"github.com/mritd/idgen/metadata"
 	"github.com/mritd/idgen/util"
+	"database/sql"
 )
 
 // 生成姓名
 func NameGenerate() string {
 	if util.DBExist() {
 		var firstName string
-		util.CheckAndExit(util.DB().QueryRow(util.FirstNameSQL, util.RandInt(0, util.FirstNameSum)).Scan(&firstName))
+		db, err := sql.Open("sqlite3", util.DBPath())
+		defer db.Close()
+		util.CheckAndExit(err)
+		util.CheckAndExit(db.QueryRow(util.FirstNameSQL, util.RandInt(0, util.FirstNameSum)).Scan(&firstName))
 		return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + firstName
 	} else {
 		return metadata.LastName[util.RandInt(0, len(metadata.LastName))] + util.GenRandomLengthChineseChars(1, 3)
