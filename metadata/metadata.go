@@ -24,7 +24,7 @@ import "github.com/mritd/idgen/models"
 
 const VERSION = "v0.0.3"
 
-const DB_DOWNLOAD_URL = "https://raw.githubusercontent.com/mritd/idgen/master/data.db"
+const DB_DOWNLOAD_URL = "https://raw.githubusercontent.com/mritd/idgen/master/resources/data.db"
 
 const HtmlTpl = `<!DOCTYPE html>
 <html lang="zh">
