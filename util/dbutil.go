@@ -41,6 +41,7 @@ func InitDB() {
 	InitConfigDir()
 	res, err := http.Get(metadata.DB_DOWNLOAD_URL)
 	CheckAndExit(err)
+	defer res.Body.Close()
 	db, err := os.OpenFile(DBPath(), os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0644)
 	CheckAndExit(err)
 	io.Copy(db, res.Body)
