@@ -45,12 +45,12 @@ func jsonServer(w http.ResponseWriter, _ *http.Request) {
 }
 
 func gen() models.GenData {
-	name := generator.NameGenerate()
-	idNo := generator.IDCardGenerate()
-	mobile := generator.MobileGenerate()
-	bank := generator.BankGenerate()
-	email := generator.EmailGenerate()
-	addr := generator.AddrGenerate()
+	name := generator.GetName()
+	idNo := generator.GetIDCard()
+	mobile := generator.GetMobile()
+	bank := generator.GetBank()
+	email := generator.GetEmail()
+	addr := generator.GetAddress()
 
 	return models.GenData{
 		Name:   name,

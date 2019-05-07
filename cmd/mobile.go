@@ -8,16 +8,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// mobileCmd represents the mobile command
 var mobileCmd = &cobra.Command{
 	Use:   "mobile",
 	Short: "生成手机号",
 	Long: `
 生成大陆手机号`,
 	Run: func(cmd *cobra.Command, args []string) {
-		mobile := generator.MobileGenerate()
+		mobile := generator.GetMobile()
 		fmt.Println(mobile)
-		clipboard.WriteAll(mobile)
+		_ = clipboard.WriteAll(mobile)
 	},
 }
 

@@ -8,16 +8,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// addrCmd represents the addr command
 var addrCmd = &cobra.Command{
 	Use:   "addr",
 	Short: "生成地址",
 	Long: `
 生成中国大陆地址信息`,
 	Run: func(cmd *cobra.Command, args []string) {
-		addr := generator.AddrGenerate()
+		addr := generator.GetAddress()
 		fmt.Println(addr)
-		clipboard.WriteAll(addr)
+		_ = clipboard.WriteAll(addr)
 	},
 }
 

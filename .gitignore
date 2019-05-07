@@ -19,3 +19,4 @@ dist
 statik
 resources/metadata_code
 resources/fname
+resources/data.db
