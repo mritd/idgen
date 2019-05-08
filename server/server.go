@@ -14,6 +14,17 @@ import (
 	"github.com/mritd/idgen/generator"
 )
 
+var indexStr string
+
+func init() {
+	var err error
+	box := packr.New("resources", "../resources")
+	indexStr, err = box.FindString("index.tpl")
+	if err != nil {
+		panic(err)
+	}
+}
+
 func Start(mode string, addr net.Addr) {
 	fmt.Println("starting server at", addr.String())
 	switch mode {
@@ -36,11 +47,7 @@ func Start(mode string, addr net.Addr) {
 }
 
 func htmlServer(w http.ResponseWriter, _ *http.Request) {
-	box := packr.New("resources", "../resources")
-	indexStr, err := box.FindString("index.tpl")
-	if err != nil {
-		panic(err)
-	}
+
 	tpl, err := template.New("").Parse(indexStr)
 	if err != nil {
 		fmt.Println(err)

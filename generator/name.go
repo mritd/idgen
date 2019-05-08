@@ -16,6 +16,7 @@ func GetName() string {
 		if err != nil {
 			panic(err)
 		}
+		defer func() { _ = db.Close() }()
 		_ = db.View(func(tx *bbolt.Tx) error {
 			firstName = string(tx.Bucket([]byte("firstName")).Get([]byte(strconv.Itoa(utils.RandInt(1, 786029)))))
 			return nil
