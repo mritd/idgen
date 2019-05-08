@@ -10,9 +10,9 @@ import (
 
 var emailCmd = &cobra.Command{
 	Use:   "email",
-	Short: "生成 Email",
+	Short: "Generate email address",
 	Long: `
-生成 Email，格式为 8位小写字母@5位小写字母.常用顶级域名后缀`,
+Generate Email in the format of "8 lowercase letters"@"5 lowercase letters"."Common top level domain suffixes"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		email := generator.GetEmail()
 		fmt.Println(email)

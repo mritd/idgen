@@ -15,15 +15,17 @@ var version bool
 
 var rootCmd = &cobra.Command{
 	Use:   "idgen",
-	Short: "身份信息生成器",
+	Short: "Identity information generator",
 	Long: `
-该工具用于生成中国大陆 姓名 身份证号 银行卡号 手机号 地址 Email
-生成后自动复制相应文本到系统剪切板，不使用子命令则默认生成身份证号`,
+This tool is used to generate Chinese name、ID number、bank card number、
+mobile phone number、address and Email; automatically generate corresponding
+text to the system clipboard after generation, and generate ID number by
+default without sub-command`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if version {
 			fmt.Println("idgen:", metadata.VERSION)
 		} else {
-			idNo := generator.GetIDCard()
+			idNo := generator.GetIDNo()
 			fmt.Println(idNo)
 			_ = clipboard.WriteAll(idNo)
 		}

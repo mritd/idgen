@@ -10,9 +10,9 @@ import (
 
 var nameCmd = &cobra.Command{
 	Use:   "name",
-	Short: "生成姓名",
+	Short: "Generate name",
 	Long: `
-生成中文姓名，长度为 2-4 位(包含复姓)`,
+Generate Chinese name, length 2-4 digits (including complex surname)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		name := generator.GetName()
 		fmt.Println(name)

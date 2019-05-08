@@ -10,11 +10,11 @@ import (
 
 var idnoCmd = &cobra.Command{
 	Use:   "idno",
-	Short: "生成身份证号",
+	Short: "Generate ID number",
 	Long: `
-生成中国大陆十八位身份证号`,
+Generate 18-digit ID number of Chinese citizens`,
 	Run: func(cmd *cobra.Command, args []string) {
-		idNo := generator.GetIDCard()
+		idNo := generator.GetIDNo()
 		fmt.Println(idNo)
 		_ = clipboard.WriteAll(idNo)
 	},

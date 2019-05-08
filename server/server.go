@@ -7,10 +7,11 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/mritd/idgen/generator"
 	"github.com/mritd/idgen/metadata"
-	"github.com/mritd/idgen/models"
-	"github.com/mritd/idgen/utils"
+
+	"github.com/gobuffalo/packr/v2"
+
+	"github.com/mritd/idgen/generator"
 )
 
 func Start(mode string, addr net.Addr) {
@@ -29,35 +30,49 @@ func Start(mode string, addr net.Addr) {
 	}
 
 	err := http.ListenAndServe(addr.String(), nil)
-	utils.CheckAndExit(err)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func htmlServer(w http.ResponseWriter, _ *http.Request) {
-	tpl, err := template.New("htmlTpl").Parse(metadata.HtmlTpl)
-	utils.CheckAndExit(err)
-	tpl.Execute(w, gen())
+	box := packr.New("resources", "../resources")
+	indexStr, err := box.FindString("index.tpl")
+	if err != nil {
+		panic(err)
+	}
+	tpl, err := template.New("").Parse(indexStr)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = tpl.Execute(w, getResponse())
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func jsonServer(w http.ResponseWriter, _ *http.Request) {
-	b, err := json.Marshal(gen())
-	utils.CheckAndExit(err)
-	fmt.Fprintf(w, string(b))
+	b, err := json.MarshalIndent(getResponse(), "", "    ")
+	if err != nil {
+		_, err = fmt.Fprintf(w, err.Error())
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		_, err = fmt.Fprintf(w, string(b))
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 }
 
-func gen() models.GenData {
-	name := generator.GetName()
-	idNo := generator.GetIDCard()
-	mobile := generator.GetMobile()
-	bank := generator.GetBank()
-	email := generator.GetEmail()
-	addr := generator.GetAddress()
-
-	return models.GenData{
-		Name:   name,
-		Mobile: mobile,
-		IdNo:   idNo,
-		Bank:   bank,
-		Email:  email,
-		Addr:   addr,
+func getResponse() metadata.Response {
+	return metadata.Response{
+		Name:   generator.GetName(),
+		Mobile: generator.GetMobile(),
+		IdNo:   generator.GetIDNo(),
+		Bank:   generator.GetBank(),
+		Email:  generator.GetEmail(),
+		Addr:   generator.GetAddress(),
 	}
 }

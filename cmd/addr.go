@@ -10,9 +10,9 @@ import (
 
 var addrCmd = &cobra.Command{
 	Use:   "addr",
-	Short: "生成地址",
+	Short: "Generate address information",
 	Long: `
-生成中国大陆地址信息`,
+Generate Chinese address information`,
 	Run: func(cmd *cobra.Command, args []string) {
 		addr := generator.GetAddress()
 		fmt.Println(addr)

@@ -10,12 +10,12 @@ import (
 
 var allCmd = &cobra.Command{
 	Use:   "all",
-	Short: "生成所有信息",
+	Short: "Generate all information",
 	Long: `
-生成本工具支持的所有信息`,
+Generate all information`,
 	Run: func(cmd *cobra.Command, args []string) {
 		name := generator.GetName()
-		idNo := generator.GetIDCard()
+		idNo := generator.GetIDNo()
 		mobile := generator.GetMobile()
 		bank := generator.GetBank()
 		email := generator.GetEmail()

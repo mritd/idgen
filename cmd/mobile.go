@@ -10,9 +10,9 @@ import (
 
 var mobileCmd = &cobra.Command{
 	Use:   "mobile",
-	Short: "生成手机号",
+	Short: "Generate mobile phone number",
 	Long: `
-生成大陆手机号`,
+Generate mobile phone numbers in China`,
 	Run: func(cmd *cobra.Command, args []string) {
 		mobile := generator.GetMobile()
 		fmt.Println(mobile)

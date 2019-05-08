@@ -22,7 +22,7 @@ func GetValidPeriod() string {
 }
 
 // 身份证号生成
-func GetIDCard() string {
+func GetIDNo() string {
 
 	// AreaCode 随机一个+4位随机数字(不够左填充0)
 	areaCode := metadata.AreaCode[utils.RandInt(0, len(metadata.AreaCode))] +

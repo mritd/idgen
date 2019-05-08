@@ -12,7 +12,7 @@ import (
 func GetName() string {
 	if utils.DBExist() {
 		var firstName string
-		db, err := bbolt.Open("data.db", 0600, nil)
+		db, err := bbolt.Open("idgen.db", 0600, nil)
 		if err != nil {
 			panic(err)
 		}

@@ -1,4 +1,4 @@
-package models
+package metadata
 
 type CardBin struct {
 	Name     string
@@ -7,7 +7,7 @@ type CardBin struct {
 	Prefixes []int
 }
 
-type GenData struct {
+type Response struct {
 	Name   string
 	Mobile string
 	IdNo   string

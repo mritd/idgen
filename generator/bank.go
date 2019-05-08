@@ -36,8 +36,8 @@ func LUHNProcess(preCardNo string) string {
 	tmpCardNo := utils.ReverseString(preCardNo)
 	for i, s := range tmpCardNo {
 
-		tmp, err := strconv.Atoi(string(s))
-		utils.CheckAndExit(err)
+		// 数据层确保卡号正确
+		tmp, _ := strconv.Atoi(string(s))
 
 		// 由于卡号实际少了一位，所以反转后卡号第一位一定为偶数位
 		// 同时 i 正好也是偶数，此时 i 将和卡号奇偶位同步

@@ -5,35 +5,36 @@ import (
 	"strconv"
 
 	"github.com/mritd/idgen/server"
-	"github.com/mritd/idgen/utils"
 	"github.com/spf13/cobra"
 )
 
-var listen *string
-var port *int
-var mode *string
+var listen string
+var port int
+var mode string
 
-// serverCmd represents the server command
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "启动 http server",
+	Short: "Run as http server",
 	Long: `
-启动一个简单的 http server 用于提供页面访问以及 json 数据返回，
-当不指定 -m 选项则同时开启 html 和 json 支持，访问地址如下:
+Run a simple http server to provide page access and json data return.
+When the -m option is not specified, both html and json support are enabled, 
+and the access address is as follows:
 
-http://BINDADDR:PORT/        返回一个简单的 html 页面
-http://BINDADDR:PORT/api     返回 json 格式数据`,
+http://BINDADDR:PORT/        return a simple html page
+http://BINDADDR:PORT/api     return json format data`,
 	Run: func(cmd *cobra.Command, args []string) {
-		tcpAddr, err := net.ResolveTCPAddr("tcp", *listen+":"+strconv.Itoa(*port))
-		utils.CheckAndExit(err)
-		server.Start(*mode, tcpAddr)
+		tcpAddr, err := net.ResolveTCPAddr("tcp", listen+":"+strconv.Itoa(port))
+		if err != nil {
+			panic(err)
+		}
+		server.Start(mode, tcpAddr)
 	},
 }
 
 func init() {
 
 	rootCmd.AddCommand(serverCmd)
-	mode = serverCmd.PersistentFlags().StringP("mode", "m", "", "server 运行模式(html/json)")
-	listen = serverCmd.PersistentFlags().StringP("listen", "l", "0.0.0.0", "http 监听地址")
-	port = serverCmd.PersistentFlags().IntP("port", "p", 8080, "http 监听端口")
+	serverCmd.PersistentFlags().StringVarP(&mode, "mode", "m", "", "server mode(html/json)")
+	serverCmd.PersistentFlags().StringVarP(&listen, "listen", "l", "0.0.0.0", "http listen address")
+	serverCmd.PersistentFlags().IntVarP(&port, "port", "p", 8080, "http listen port")
 }
