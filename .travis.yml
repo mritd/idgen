@@ -5,12 +5,11 @@ os:
 language: go
 
 go:
-  - 1.8.x
-  - 1.9.x
-  - 1.10.x
+  - 1.12.x
 
 before_install:
-  - go get github.com/inconshreveable/mousetrap
+  - go get -u github.com/mitchellh/gox
+  - go get -u github.com/gobuffalo/packr/v2/packr2
 
 script:
-  - go test -v "./..." -test.bench ".*"
+  - make

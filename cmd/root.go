@@ -40,6 +40,5 @@ func Execute() {
 }
 
 func init() {
-
 	rootCmd.PersistentFlags().BoolVarP(&version, "version", "v", false, "显示当前版本")
 }
