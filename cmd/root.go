@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mritd/idgen/metadata"
-
 	"github.com/atotto/clipboard"
 	"github.com/mritd/idgen/generator"
 	"github.com/spf13/cobra"
@@ -23,7 +21,7 @@ text to the system clipboard after generation, and generate ID number by
 default without sub-command`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if version {
-			fmt.Println("idgen:", metadata.VERSION)
+			printVersion()
 		} else {
 			idNo := generator.GetIDNo()
 			fmt.Println(idNo)

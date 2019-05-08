@@ -31,9 +31,13 @@ var versionCmd = &cobra.Command{
 	Long: `
 Print idgen version`,
 	Run: func(cmd *cobra.Command, args []string) {
-		banner, _ := base64.StdEncoding.DecodeString(bannerBase64)
-		fmt.Printf(versionTpl, banner, Version, runtime.GOOS+"/"+runtime.GOARCH, BuildDate, CommitID)
+		printVersion()
 	},
+}
+
+func printVersion() {
+	banner, _ := base64.StdEncoding.DecodeString(bannerBase64)
+	fmt.Printf(versionTpl, banner, Version, runtime.GOOS+"/"+runtime.GOARCH, BuildDate, CommitID)
 }
 
 func init() {
