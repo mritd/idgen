@@ -26,6 +26,10 @@ install:
                          -X 'github.com/mritd/idgen/cmd.BuildDate=${BUILD_DATE}' \
                          -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
 
+docker:
+	packr2
+	docker build -t mritd/idgen:${BUILD_VERSION} .
+
 .PHONY : all release clean install
 
 .EXPORT_ALL_VARIABLES:
