@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
+	"github.com/mritd/chinaid"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,7 @@ var emailCmd = &cobra.Command{
 	Long: `
 Generate Email in the format of "8 lowercase letters"@"5 lowercase letters"."Common top level domain suffixes"`,
 	Run: func(cmd *cobra.Command, args []string) {
-		email := generator.GetEmail()
+		email := chinaid.Email()
 		fmt.Println(email)
 		_ = clipboard.WriteAll(email)
 	},

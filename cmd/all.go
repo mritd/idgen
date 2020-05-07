@@ -3,8 +3,9 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/mritd/chinaid"
+
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
 	"github.com/spf13/cobra"
 )
 
@@ -14,12 +15,12 @@ var allCmd = &cobra.Command{
 	Long: `
 Generate all information`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name := generator.GetName()
-		idNo := generator.GetIDNo()
-		mobile := generator.GetMobile()
-		bank := generator.GetBank()
-		email := generator.GetEmail()
-		addr := generator.GetAddress()
+		name := chinaid.Name()
+		idNo := chinaid.IDNo()
+		mobile := chinaid.Mobile()
+		bank := chinaid.BankNo()
+		email := chinaid.Email()
+		addr := chinaid.Address()
 		fmt.Println(name)
 		fmt.Println(idNo)
 		fmt.Println(mobile)

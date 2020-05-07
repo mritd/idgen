@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
+	"github.com/mritd/chinaid"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +23,7 @@ default without sub-command`,
 		if version {
 			printVersion()
 		} else {
-			idNo := generator.GetIDNo()
+			idNo := chinaid.IDNo()
 			fmt.Println(idNo)
 			_ = clipboard.WriteAll(idNo)
 		}

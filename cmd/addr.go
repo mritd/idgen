@@ -3,8 +3,9 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/mritd/chinaid"
+
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +15,7 @@ var addrCmd = &cobra.Command{
 	Long: `
 Generate Chinese address information`,
 	Run: func(cmd *cobra.Command, args []string) {
-		addr := generator.GetAddress()
+		addr := chinaid.Address()
 		fmt.Println(addr)
 		_ = clipboard.WriteAll(addr)
 	},

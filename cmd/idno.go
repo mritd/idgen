@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
+	"github.com/mritd/chinaid"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,7 @@ var idnoCmd = &cobra.Command{
 	Long: `
 Generate 18-digit ID number of Chinese citizens`,
 	Run: func(cmd *cobra.Command, args []string) {
-		idNo := generator.GetIDNo()
+		idNo := chinaid.IDNo()
 		fmt.Println(idNo)
 		_ = clipboard.WriteAll(idNo)
 	},

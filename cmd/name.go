@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/atotto/clipboard"
-	"github.com/mritd/idgen/generator"
+	"github.com/mritd/chinaid"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,7 @@ var nameCmd = &cobra.Command{
 	Long: `
 Generate Chinese name, length 2-4 digits (including complex surname)`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name := generator.GetName()
+		name := chinaid.Name()
 		fmt.Println(name)
 		_ = clipboard.WriteAll(name)
 	},

@@ -11,10 +11,10 @@ all:
                     -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
 
 release: all
-	ghr -u mritd -t $(GITHUB_RELEASE_TOKEN) -replace -recreate --debug ${BUILD_VERSION} dist
+	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate --debug ${BUILD_VERSION} dist
 
 pre-release: all
-	ghr -u mritd -t $(GITHUB_RELEASE_TOKEN) -replace -recreate -prerelease --debug ${BUILD_VERSION} dist
+	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate -prerelease --debug ${BUILD_VERSION} dist
 
 clean:
 	packr2 clean
@@ -30,8 +30,9 @@ docker:
 	packr2
 	docker build -t mritd/idgen:${BUILD_VERSION} .
 
-.PHONY : all release clean install
+.PHONY: all release clean install
 
 .EXPORT_ALL_VARIABLES:
 
 GO111MODULE = on
+GOPROXY = https://goproxy.cn

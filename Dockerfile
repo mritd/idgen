@@ -1,13 +1,14 @@
-FROM golang:1.12.5-alpine3.9 AS builder
+FROM golang:1.14.2-alpine3.11 AS builder
 
 COPY . /go/src/github.com/mritd/idgen
 
 WORKDIR /go/src/github.com/mritd/idgen
 
 ENV GO111MODULE on
-ENV GOPROXY https://athens.azurefd.net
+ENV GOPROXY https://goproxy.cn
 
-RUN apk upgrade \
+RUN set -ex \
+    && apk upgrade \
     && apk add git \
     && BUILD_VERSION=$(cat version) \
     && BUILD_DATE=$(date "+%F %T") \
@@ -18,7 +19,7 @@ RUN apk upgrade \
                             -X 'github.com/mritd/idgen/cmd.BuildDate=${BUILD_DATE}' \
                             -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
 
-FROM alpine:3.9 AS dist
+FROM alpine:3.11 AS dist
 
 LABEL maintainer="mritd <mritd@linux.com>"
 
@@ -26,7 +27,8 @@ ARG TZ="Asia/Shanghai"
 
 ENV TZ ${TZ}
 
-RUN apk upgrade \
+RUN set -ex \
+    && apk upgrade \
     && apk add bash tzdata \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
@@ -34,4 +36,5 @@ RUN apk upgrade \
 
 COPY --from=builder /go/bin/idgen /usr/bin/idgen
 
-CMD ["idgen","server"]
+ENTRYPOINT ["idgen"]
+CMD ["server"]
