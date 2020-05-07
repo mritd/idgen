@@ -13,13 +13,7 @@ docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像；
 
 - **自行编译**
 
-本项目使用 `packr2` 将页面文件打包到了二进制文件中，编译前需要安装 `packr2`
-
-``` sh
-go get -u github.com/gobuffalo/packr/v2/packr2
-```
-
-然后运行标准的 `go install` 命令既可
+确保已安装 go 1.14+，然后执行 `make install` 即可
 
 ## 运行模式
 
