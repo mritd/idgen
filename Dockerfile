@@ -8,14 +8,15 @@ ENV GO111MODULE on
 ENV GOPROXY https://goproxy.cn
 
 RUN set -ex \
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk upgrade \
     && apk add git \
-    && BUILD_VERSION=$(cat version) \
+    && BUILD_VERSION=$(git describe --tag) \
     && BUILD_DATE=$(date "+%F %T") \
     && COMMIT_SHA1=$(git rev-parse HEAD) \
     && go install github.com/gobuffalo/packr/v2/packr2 \
     && packr2 clean && packr2 \
-    && go install -ldflags  "-X 'github.com/mritd/idgen/cmd.Version=${BUILD_VERSION}' \
+    && go install -ldflags  "-s -w -X 'github.com/mritd/idgen/cmd.Version=${BUILD_VERSION}' \
                             -X 'github.com/mritd/idgen/cmd.BuildDate=${BUILD_DATE}' \
                             -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
 
@@ -28,6 +29,7 @@ ARG TZ="Asia/Shanghai"
 ENV TZ ${TZ}
 
 RUN set -ex \
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk upgrade \
     && apk add bash tzdata \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \

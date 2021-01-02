@@ -13,7 +13,7 @@ docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像；
 
 - **自行编译**
 
-确保已安装 go 1.14+，然后执行 `make install` 即可
+确保已安装 go 1.14+ 和 [gox](https://github.com/mitchellh/gox)，然后执行 `make install` 即可
 
 ## 运行模式
 
