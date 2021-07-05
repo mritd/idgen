@@ -1,11 +1,8 @@
-FROM golang:1.14.2-alpine3.11 AS builder
+FROM golang:1.16-alpine AS builder
 
 COPY . /go/src/github.com/mritd/idgen
 
 WORKDIR /go/src/github.com/mritd/idgen
-
-ENV GO111MODULE on
-ENV GOPROXY https://goproxy.cn
 
 RUN set -ex \
     && apk upgrade \
@@ -19,7 +16,7 @@ RUN set -ex \
                             -X 'github.com/mritd/idgen/cmd.BuildDate=${BUILD_DATE}' \
                             -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
 
-FROM alpine:3.11 AS dist
+FROM alpine AS dist
 
 LABEL maintainer="mritd <mritd@linux.com>"
 
@@ -37,4 +34,5 @@ RUN set -ex \
 COPY --from=builder /go/bin/idgen /usr/bin/idgen
 
 ENTRYPOINT ["idgen"]
+
 CMD ["server"]

@@ -3,17 +3,13 @@ BUILD_DATE      := $(shell date "+%F %T")
 COMMIT_SHA1     := $(shell git rev-parse HEAD)
 
 all:
-	gox -osarch="darwin/amd64 linux/386 linux/amd64" \
-        -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" \
-    	-ldflags   "-X 'github.com/mritd/idgen/cmd.Version=${BUILD_VERSION}' \
-                    -X 'github.com/mritd/idgen/cmd.BuildDate=${BUILD_DATE}' \
-                    -X 'github.com/mritd/idgen/cmd.CommitID=${COMMIT_SHA1}'"
+	bash .cross_compile.sh
 
 release: all
-	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate --debug ${BUILD_VERSION} dist
+	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate -name "Bump v${BUILD_VERSION}" --debug ${BUILD_VERSION} dist
 
 pre-release: all
-	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate -prerelease --debug ${BUILD_VERSION} dist
+	ghr -u mritd -t $(GITHUB_TOKEN) -replace -recreate -prerelease -name "Bump v${BUILD_VERSION}" --debug ${BUILD_VERSION} dist
 
 clean:
 	rm -rf dist
@@ -29,6 +25,3 @@ docker:
 .PHONY: all release clean install
 
 .EXPORT_ALL_VARIABLES:
-
-GO111MODULE = on
-GOPROXY = https://goproxy.cn
