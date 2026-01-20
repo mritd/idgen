@@ -22,7 +22,7 @@
         ],
 
         // Matrix characters
-        matrixChars: '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン',
+        matrixChars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>{}[]=/\\|~^',
 
         init() {
             this.canvas = document.getElementById('bg-canvas');
