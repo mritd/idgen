@@ -5,7 +5,7 @@ import (
 
 	"github.com/atotto/clipboard"
 	"github.com/mritd/chinaid/v2"
-	"github.com/mritd/idgen/utils"
+	"github.com/mritd/idgen/v2/utils"
 	"github.com/spf13/cobra"
 )
 

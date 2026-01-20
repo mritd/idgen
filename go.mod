@@ -1,4 +1,4 @@
-module github.com/mritd/idgen
+module github.com/mritd/idgen/v2
 
 go 1.25.5
 

@@ -19,7 +19,7 @@ tasks:
     cmds:
       - |
         go build -trimpath -o dist/idgen -ldflags \
-        "-w -s -X 'github.com/mritd/idgen/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/cmd.buildDate={{.BUILD_DATE}}'"
+        "-w -s -X 'github.com/mritd/idgen/v2/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/v2/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/v2/cmd.buildDate={{.BUILD_DATE}}'"
 
   build-cross:
     label: build-{{.TASK}}
@@ -28,7 +28,7 @@ tasks:
       - |
         GOOS={{.GOOS}} GOARCH={{.GOARCH}} GOARM={{.GOARM}} GOAMD64={{.GOAMD64}} \
         go build -trimpath -o dist/idgen-{{.TASK}} -ldflags \
-        "-w -s -X 'github.com/mritd/idgen/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/cmd.buildDate={{.BUILD_DATE}}'"
+        "-w -s -X 'github.com/mritd/idgen/v2/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/v2/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/v2/cmd.buildDate={{.BUILD_DATE}}'"
 
   test:
     desc: Run unit tests

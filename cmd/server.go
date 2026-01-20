@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/mritd/idgen/server"
+	"github.com/mritd/idgen/v2/server"
 	"github.com/spf13/cobra"
 )
 
