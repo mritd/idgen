@@ -1,22 +1,30 @@
 package cmd
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/atotto/clipboard"
-	"github.com/mritd/chinaid"
+	"github.com/mritd/chinaid/v2"
+	"github.com/mritd/idgen/utils"
 	"github.com/spf13/cobra"
 )
 
 var mobileCmd = &cobra.Command{
 	Use:   "mobile",
 	Short: "Generate mobile phone number",
-	Long: `
-Generate mobile phone numbers in China`,
+	Long:  `Generate mobile phone numbers in China`,
 	Run: func(cmd *cobra.Command, args []string) {
-		mobile := chinaid.Mobile()
-		fmt.Println(mobile)
-		_ = clipboard.WriteAll(mobile)
+		var values []string
+		for _, p := range chinaid.NewPerson().BuildN(count) {
+			values = append(values, p.Mobile())
+		}
+
+		formatter := utils.NewFormatter(os.Stdout, format)
+		_ = formatter.FormatSingle("mobile", values)
+
+		if shouldCopy() {
+			_ = clipboard.WriteAll(utils.SingleToClipboardText(values))
+		}
 	},
 }
 

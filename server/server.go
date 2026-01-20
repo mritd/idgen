@@ -1,78 +1,83 @@
 package server
 
 import (
-	"encoding/json"
+	"embed"
 	"fmt"
-	"net"
+	"html/template"
 	"net/http"
-	"strings"
+	"strconv"
 
-	"github.com/mritd/chinaid"
+	log "github.com/sirupsen/logrus"
 )
 
-type Response struct {
-	Name   string
-	Mobile string
-	IdNo   string
-	Bank   string
-	Email  string
-	Addr   string
-}
+//go:embed static/*
+var staticFS embed.FS
 
-func Start(mode string, addr net.Addr) {
-	switch mode {
-	case "html":
-		http.HandleFunc("/", htmlServer)
-		fmt.Println("html server starting...")
-	case "json":
-		http.HandleFunc("/", jsonServer)
-		fmt.Println("json server starting...")
-	default:
-		http.HandleFunc("/", htmlServer)
-		http.HandleFunc("/api", jsonServer)
-		fmt.Println("html and json server starting...")
+var defaultTheme string
+
+// Start starts the HTTP server
+func Start(listen string, port int, theme string) {
+	defaultTheme = theme
+	if defaultTheme != "cyber" && defaultTheme != "terminal" {
+		defaultTheme = "cyber"
 	}
 
-	fmt.Printf("server listen at %s...\n", addr.String())
-	err := http.ListenAndServe(addr.String(), nil)
-	if err != nil {
-		panic(err)
-	}
-}
+	mux := http.NewServeMux()
 
-func htmlServer(w http.ResponseWriter, _ *http.Request) {
-	resp := htmlStr
-	resp = strings.ReplaceAll(resp, "{{ .Name }}", chinaid.Name())
-	resp = strings.ReplaceAll(resp, "{{ .Mobile }}", chinaid.Mobile())
-	resp = strings.ReplaceAll(resp, "{{ .IDNo }}", chinaid.IDNo())
-	resp = strings.ReplaceAll(resp, "{{ .BankNo }}", chinaid.BankNo())
-	resp = strings.ReplaceAll(resp, "{{ .Email }}", chinaid.Email())
-	resp = strings.ReplaceAll(resp, "{{ .Address }}", chinaid.Address())
-	_, err := fmt.Fprint(w, resp)
-	if err != nil {
-		fmt.Println(err)
+	// Static files
+	mux.HandleFunc("GET /", handleIndex)
+	mux.Handle("GET /static/", http.FileServerFS(staticFS))
+
+	// API v1 endpoints
+	mux.HandleFunc("GET /api/v1/generate", handleGenerate)
+	mux.HandleFunc("GET /api/v1/batch", handleBatch)
+	mux.HandleFunc("GET /api/v1/export", handleExport)
+
+	addr := fmt.Sprintf("%s:%d", listen, port)
+	log.Infof("Server starting at http://%s", addr)
+	log.Infof("Default theme: %s", defaultTheme)
+
+	if err := http.ListenAndServe(addr, mux); err != nil {
+		log.Fatalf("Server failed: %v", err)
 	}
 }
 
-func jsonServer(w http.ResponseWriter, _ *http.Request) {
-	b, err := json.MarshalIndent(
-		Response{
-			Name:   chinaid.Name(),
-			Mobile: chinaid.Mobile(),
-			IdNo:   chinaid.IDNo(),
-			Bank:   chinaid.BankNo(),
-			Email:  chinaid.Email(),
-			Addr:   chinaid.Address(),
-		}, "", "    ")
-	if err != nil {
-		_, err = fmt.Fprint(w, err.Error())
-		if err != nil {
-			fmt.Println(err)
-		}
-	} else {
-		_, err = fmt.Fprint(w, string(b))
-		if err != nil {
-			fmt.Println(err)
-		}
+func handleIndex(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
 	}
+
+	tmpl, err := template.ParseFS(staticFS, "static/index.html")
+	if err != nil {
+		log.Errorf("Failed to parse template: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	data := struct {
+		DefaultTheme string
+	}{
+		DefaultTheme: defaultTheme,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	if err := tmpl.Execute(w, data); err != nil {
+		log.Errorf("Failed to execute template: %v", err)
+	}
+}
+
+func parseCount(r *http.Request) int {
+	countStr := r.URL.Query().Get("count")
+	if countStr == "" {
+		return 1
+	}
+	count, err := strconv.Atoi(countStr)
+	if err != nil || count < 1 {
+		return 1
+	}
+	if count > 1000 {
+		return 1000
+	}
+	return count
 }

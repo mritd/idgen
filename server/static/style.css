@@ -1,0 +1,486 @@
+/* CSS Variables for Themes */
+:root {
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+}
+
+/* Cyber Theme (Default) */
+[data-theme="cyber"] {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: rgba(20, 20, 35, 0.8);
+    --border-color: #2a2a4a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #8888aa;
+    --accent-primary: #00f5ff;
+    --accent-secondary: #ff00ff;
+    --accent-gradient: linear-gradient(135deg, #00f5ff 0%, #ff00ff 100%);
+    --glow-primary: 0 0 20px rgba(0, 245, 255, 0.5);
+    --glow-secondary: 0 0 20px rgba(255, 0, 255, 0.3);
+    --btn-bg: rgba(0, 245, 255, 0.1);
+    --btn-hover: rgba(0, 245, 255, 0.2);
+    --success-color: #00ff88;
+    --table-stripe: rgba(0, 245, 255, 0.05);
+}
+
+/* Terminal Theme */
+[data-theme="terminal"] {
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: rgba(0, 20, 0, 0.6);
+    --border-color: #00ff00;
+    --text-primary: #00ff00;
+    --text-secondary: #008800;
+    --accent-primary: #00ff00;
+    --accent-secondary: #00aa00;
+    --accent-gradient: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
+    --glow-primary: 0 0 10px rgba(0, 255, 0, 0.5);
+    --glow-secondary: 0 0 5px rgba(0, 255, 0, 0.3);
+    --btn-bg: rgba(0, 255, 0, 0.1);
+    --btn-hover: rgba(0, 255, 0, 0.2);
+    --success-color: #00ff00;
+    --table-stripe: rgba(0, 255, 0, 0.05);
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-mono);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Cyber theme background effect */
+[data-theme="cyber"] body {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+}
+
+/* Terminal theme scanline effect */
+[data-theme="terminal"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+[data-theme="cyber"] .logo {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: var(--glow-primary);
+}
+
+[data-theme="terminal"] .logo {
+    color: var(--accent-primary);
+    text-shadow: var(--glow-primary);
+}
+
+.logo-bracket {
+    opacity: 0.6;
+}
+
+.theme-btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    color: var(--accent-primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    background: var(--btn-hover);
+    box-shadow: var(--glow-primary);
+}
+
+[data-theme="cyber"] .terminal-icon,
+[data-theme="terminal"] .cyber-icon {
+    display: none;
+}
+
+[data-theme="cyber"] .cyber-icon,
+[data-theme="terminal"] .terminal-icon {
+    display: inline;
+}
+
+/* Card */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="cyber"] .card {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="terminal"] .card {
+    border-style: solid;
+    box-shadow: var(--glow-secondary);
+}
+
+/* Fields */
+.field {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.field:last-child {
+    border-bottom: none;
+}
+
+.field label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.value-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.value {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--text-primary);
+    word-break: break-all;
+}
+
+[data-theme="terminal"] .value {
+    font-family: var(--font-mono);
+}
+
+/* Buttons */
+.copy-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--accent-primary);
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.copy-btn:hover {
+    background: var(--btn-hover);
+    box-shadow: var(--glow-secondary);
+}
+
+.copy-btn.copied {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: var(--bg-primary);
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.action-btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    color: var(--accent-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-btn:hover {
+    background: var(--btn-hover);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-1px);
+}
+
+.action-btn.primary {
+    background: var(--accent-gradient);
+    border: none;
+    color: var(--bg-primary);
+    font-weight: 600;
+}
+
+[data-theme="terminal"] .action-btn.primary {
+    background: var(--accent-primary);
+}
+
+.action-btn.primary:hover {
+    box-shadow: var(--glow-primary);
+}
+
+.action-btn.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+.btn-icon {
+    font-size: 1.1em;
+}
+
+/* Batch Control */
+.batch-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.batch-control label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.batch-control select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.batch-control select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: var(--glow-secondary);
+}
+
+/* Batch View */
+.batch-view {
+    margin-top: 2rem;
+}
+
+.batch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.batch-header h3 {
+    color: var(--accent-primary);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+tr:nth-child(even) {
+    background: var(--table-stripe);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td {
+    color: var(--text-primary);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+}
+
+td.copyable {
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+td.copyable:hover {
+    background: var(--btn-hover);
+}
+
+td.copyable.copied {
+    background: rgba(0, 255, 136, 0.2);
+}
+
+td:last-child {
+    width: 40px;
+    text-align: center;
+}
+
+/* Row copy button in last column */
+td:last-child .copy-btn {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+tr:hover td:last-child .copy-btn {
+    opacity: 1;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: var(--glow-primary); }
+    50% { box-shadow: var(--glow-secondary); }
+}
+
+[data-theme="cyber"] .action-btn.primary {
+    animation: glow 2s ease-in-out infinite;
+}
+
+[data-theme="terminal"] .logo {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* Terminal cursor blink */
+[data-theme="terminal"] .value::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .batch-control {
+        margin-left: 0;
+        justify-content: space-between;
+    }
+
+    td {
+        max-width: 100px;
+    }
+}

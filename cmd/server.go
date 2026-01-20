@@ -1,40 +1,34 @@
 package cmd
 
 import (
-	"net"
-	"strconv"
-
 	"github.com/mritd/idgen/server"
 	"github.com/spf13/cobra"
 )
 
-var listen string
-var port int
-var mode string
+var (
+	listen string
+	port   int
+	theme  string
+)
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Run as http server",
-	Long: `
-Run a simple http server to provide page access and json data return.
-When the -m option is not specified, both html and json support are enabled, 
-and the access address is as follows:
+	Long: `Run a simple http server to provide page access and API.
 
-http://BINDADDR:PORT/        return a simple html page
-http://BINDADDR:PORT/api     return json format data`,
+Access endpoints:
+  http://BINDADDR:PORT/              HTML page with theme
+  http://BINDADDR:PORT/api/v1/generate   Generate single record (JSON)
+  http://BINDADDR:PORT/api/v1/batch      Batch generate (JSON)
+  http://BINDADDR:PORT/api/v1/export     Export as CSV`,
 	Run: func(cmd *cobra.Command, args []string) {
-		tcpAddr, err := net.ResolveTCPAddr("tcp", listen+":"+strconv.Itoa(port))
-		if err != nil {
-			panic(err)
-		}
-		server.Start(mode, tcpAddr)
+		server.Start(listen, port, theme)
 	},
 }
 
 func init() {
-
 	rootCmd.AddCommand(serverCmd)
-	serverCmd.PersistentFlags().StringVarP(&mode, "mode", "m", "", "server mode(html/json)")
-	serverCmd.PersistentFlags().StringVarP(&listen, "listen", "l", "0.0.0.0", "http listen address")
-	serverCmd.PersistentFlags().IntVarP(&port, "port", "p", 8080, "http listen port")
+	serverCmd.Flags().StringVarP(&listen, "listen", "l", "0.0.0.0", "HTTP listen address")
+	serverCmd.Flags().IntVarP(&port, "port", "p", 8080, "HTTP listen port")
+	serverCmd.Flags().StringVarP(&theme, "theme", "t", "cyber", "Default theme: cyber|terminal")
 }

@@ -20,16 +20,15 @@ CommitID: %s
 `
 
 var (
-	Version   string
-	BuildDate string
-	CommitID  string
+	version   = "dev"
+	commit    = "unknown"
+	buildDate = "unknown"
 )
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version",
-	Long: `
-Print idgen version`,
+	Long:  `Print idgen version information`,
 	Run: func(cmd *cobra.Command, args []string) {
 		printVersion()
 	},
@@ -37,7 +36,7 @@ Print idgen version`,
 
 func printVersion() {
 	banner, _ := base64.StdEncoding.DecodeString(bannerBase64)
-	fmt.Printf(versionTpl, banner, Version, runtime.GOOS+"/"+runtime.GOARCH, BuildDate, CommitID)
+	fmt.Printf(versionTpl, banner, version, runtime.GOOS+"/"+runtime.GOARCH, buildDate, commit)
 }
 
 func init() {

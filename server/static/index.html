@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="{{.DefaultTheme}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>IDGEN - Identity Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">IDGEN</span>
+                <span class="logo-bracket">]</span>
+            </h1>
+            <button id="theme-toggle" class="theme-btn" title="Switch Theme">
+                <span class="theme-icon cyber-icon">&#x2726;</span>
+                <span class="theme-icon terminal-icon">&#x25B6;</span>
+            </button>
+        </header>
+
+        <main>
+            <div class="card" id="single-view">
+                <div class="field">
+                    <label>Name</label>
+                    <div class="value-row">
+                        <span class="value" data-field="name">-</span>
+                        <button class="copy-btn" data-target="name" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>IDNo</label>
+                    <div class="value-row">
+                        <span class="value" data-field="idno">-</span>
+                        <button class="copy-btn" data-target="idno" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Mobile</label>
+                    <div class="value-row">
+                        <span class="value" data-field="mobile">-</span>
+                        <button class="copy-btn" data-target="mobile" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Bank</label>
+                    <div class="value-row">
+                        <span class="value" data-field="bank">-</span>
+                        <button class="copy-btn" data-target="bank" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <div class="value-row">
+                        <span class="value" data-field="email">-</span>
+                        <button class="copy-btn" data-target="email" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Address</label>
+                    <div class="value-row">
+                        <span class="value" data-field="address">-</span>
+                        <button class="copy-btn" data-target="address" title="Copy">
+                            <span class="copy-icon">&#x2398;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="generate-btn" class="action-btn primary">
+                    <span class="btn-icon">&#x21BB;</span>
+                    <span>Generate</span>
+                </button>
+                <button id="copy-all-btn" class="action-btn">
+                    <span class="btn-icon">&#x2398;</span>
+                    <span>Copy All</span>
+                </button>
+                <div class="batch-control">
+                    <label for="batch-count">Batch:</label>
+                    <select id="batch-count">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="batch-view" id="batch-view" style="display: none;">
+                <div class="batch-header">
+                    <h3>Batch Results</h3>
+                    <button id="export-csv-btn" class="action-btn small">
+                        <span class="btn-icon">&#x21E9;</span>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="batch-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>IDNo</th>
+                                <th>Mobile</th>
+                                <th>Bank</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

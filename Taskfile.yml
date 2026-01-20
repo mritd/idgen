@@ -1,0 +1,132 @@
+version: '3'
+
+vars:
+  VERSION:
+    sh: git describe --tags --always 2>/dev/null || echo "dev"
+  BUILD_COMMIT:
+    sh: git rev-parse --short HEAD 2>/dev/null || echo "unknown"
+  BUILD_DATE:
+    sh: date "+%F %T"
+
+tasks:
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf dist
+
+  build:
+    desc: Build for current platform
+    cmds:
+      - |
+        go build -trimpath -o dist/idgen -ldflags \
+        "-w -s -X 'github.com/mritd/idgen/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/cmd.buildDate={{.BUILD_DATE}}'"
+
+  build-cross:
+    label: build-{{.TASK}}
+    internal: true
+    cmds:
+      - |
+        GOOS={{.GOOS}} GOARCH={{.GOARCH}} GOARM={{.GOARM}} GOAMD64={{.GOAMD64}} \
+        go build -trimpath -o dist/idgen-{{.TASK}} -ldflags \
+        "-w -s -X 'github.com/mritd/idgen/cmd.version={{.VERSION}}' -X 'github.com/mritd/idgen/cmd.commit={{.BUILD_COMMIT}}' -X 'github.com/mritd/idgen/cmd.buildDate={{.BUILD_DATE}}'"
+
+  test:
+    desc: Run unit tests
+    cmds:
+      - go test -v -race ./...
+
+  test-cover:
+    desc: Run tests with coverage
+    cmds:
+      - go test -v -race -coverprofile=coverage.out ./...
+      - go tool cover -html=coverage.out -o coverage.html
+      - echo "Coverage report generated at coverage.html"
+
+  lint:
+    desc: Run linter
+    cmds:
+      - golangci-lint run ./...
+
+  fmt:
+    desc: Format code
+    cmds:
+      - gofmt -w -s .
+      - goimports -w .
+
+  # Cross-compilation targets
+  linux-386:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: 386 }
+
+  linux-amd64:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: amd64 }
+
+  linux-amd64-v3:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: amd64, GOAMD64: v3 }
+
+  linux-amd64-v4:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: amd64, GOAMD64: v4 }
+
+  linux-armv5:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: arm, GOARM: 5 }
+
+  linux-armv6:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: arm, GOARM: 6 }
+
+  linux-armv7:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: arm, GOARM: 7 }
+
+  linux-arm64:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: linux, GOARCH: arm64 }
+
+  darwin-amd64:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: darwin, GOARCH: amd64 }
+
+  darwin-arm64:
+    cmds:
+      - task: build-cross
+        vars: { TASK: "{{.TASK}}", GOOS: darwin, GOARCH: arm64 }
+
+  release:
+    desc: Build all release binaries
+    cmds:
+      - task: clean
+      - task: linux-386
+      - task: linux-amd64
+      - task: linux-amd64-v3
+      - task: linux-amd64-v4
+      - task: linux-armv5
+      - task: linux-armv6
+      - task: linux-armv7
+      - task: linux-arm64
+      - task: darwin-amd64
+      - task: darwin-arm64
+      - task: checksums
+
+  checksums:
+    desc: Generate checksums.txt for release
+    cmds:
+      - cd dist && shasum -a 256 idgen-* > checksums.txt
+      - cat dist/checksums.txt
+
+  default:
+    desc: Build for current platform
+    cmds:
+      - task: build

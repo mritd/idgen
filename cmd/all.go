@@ -1,33 +1,37 @@
 package cmd
 
 import (
-	"fmt"
-
-	"github.com/mritd/chinaid"
+	"os"
 
 	"github.com/atotto/clipboard"
+	"github.com/mritd/chinaid/v2"
+	"github.com/mritd/idgen/utils"
 	"github.com/spf13/cobra"
 )
 
 var allCmd = &cobra.Command{
 	Use:   "all",
 	Short: "Generate all information",
-	Long: `
-Generate all information`,
+	Long:  `Generate all information including name, ID, mobile, bank, email and address`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name := chinaid.Name()
-		idNo := chinaid.IDNo()
-		mobile := chinaid.Mobile()
-		bank := chinaid.BankNo()
-		email := chinaid.Email()
-		addr := chinaid.Address()
-		fmt.Println(name)
-		fmt.Println(idNo)
-		fmt.Println(mobile)
-		fmt.Println(bank)
-		fmt.Println(email)
-		fmt.Println(addr)
-		_ = clipboard.WriteAll(name + "\n" + idNo + "\n" + mobile + "\n" + bank + "\n" + email + "\n" + addr)
+		var identities []utils.Identity
+		for _, p := range chinaid.NewPerson().BuildN(count) {
+			identities = append(identities, utils.Identity{
+				Name:    p.Name(),
+				IDNo:    p.IDNo(),
+				Mobile:  p.Mobile(),
+				Bank:    p.BankNo(),
+				Email:   p.Email(),
+				Address: p.Address(),
+			})
+		}
+
+		formatter := utils.NewFormatter(os.Stdout, format)
+		_ = formatter.FormatIdentities(identities)
+
+		if shouldCopy() {
+			_ = clipboard.WriteAll(utils.ToClipboardText(identities))
+		}
 	},
 }
 
