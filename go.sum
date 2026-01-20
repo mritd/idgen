@@ -5,8 +5,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/mritd/chinaid/v2 v2.0.2 h1:KPpwcL7iN1C2C7taeblOh4PJTDNojLy2SQXbJMgXhwo=
-github.com/mritd/chinaid/v2 v2.0.2/go.mod h1:/4zgI9Y/JLKJeuGNkDGmePbQbGNvdtE7kV6+xMZzefo=
+github.com/mritd/chinaid/v2 v2.0.3 h1:kN8+3XsXe5F5cNqPL7KYSf5+9SAhcg1sBrCMb/Zg/uo=
+github.com/mritd/chinaid/v2 v2.0.3/go.mod h1:8LuHNYI6WiStTvFgcakhQj6aL4VfHy9eoVeb1rM31Tc=
 github.com/mritd/logrus v1.0.0 h1:EItzfvmkZ6DZXuNm6+DxIs78XLua4gQL+56O+rkNyFg=
 github.com/mritd/logrus v1.0.0/go.mod h1:Y3PltYjxRXvN5CjFbauH7AjjXF8EsOzG9hWHXuvdS34=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
