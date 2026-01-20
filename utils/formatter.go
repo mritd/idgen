@@ -118,14 +118,14 @@ func (f *Formatter) formatSingleTable(field string, values []string) error {
 
 	// Print table
 	border := "+" + strings.Repeat("-", maxWidth+4) + "+"
-	fmt.Fprintln(f.writer, border)
-	fmt.Fprintf(f.writer, "|  %-*s  |\n", maxWidth, field)
-	fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintf(f.writer, "|  %-*s  |\n", maxWidth, field)
+	_, _ = fmt.Fprintln(f.writer, border)
 	for _, v := range values {
 		padding := maxWidth - displayWidth(v)
-		fmt.Fprintf(f.writer, "|  %s%s  |\n", v, strings.Repeat(" ", padding))
+		_, _ = fmt.Fprintf(f.writer, "|  %s%s  |\n", v, strings.Repeat(" ", padding))
 	}
-	fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintln(f.writer, border)
 	return nil
 }
 
@@ -161,12 +161,12 @@ func (f *Formatter) formatTable(identities []Identity) error {
 	if len(identities) == 1 {
 		// Single record - simple key-value format
 		id := identities[0]
-		fmt.Fprintf(f.writer, "Name:    %s\n", id.Name)
-		fmt.Fprintf(f.writer, "IDNo:    %s\n", id.IDNo)
-		fmt.Fprintf(f.writer, "Mobile:  %s\n", id.Mobile)
-		fmt.Fprintf(f.writer, "Bank:    %s\n", id.Bank)
-		fmt.Fprintf(f.writer, "Email:   %s\n", id.Email)
-		fmt.Fprintf(f.writer, "Address: %s\n", id.Address)
+		_, _ = fmt.Fprintf(f.writer, "Name:    %s\n", id.Name)
+		_, _ = fmt.Fprintf(f.writer, "IDNo:    %s\n", id.IDNo)
+		_, _ = fmt.Fprintf(f.writer, "Mobile:  %s\n", id.Mobile)
+		_, _ = fmt.Fprintf(f.writer, "Bank:    %s\n", id.Bank)
+		_, _ = fmt.Fprintf(f.writer, "Email:   %s\n", id.Email)
+		_, _ = fmt.Fprintf(f.writer, "Address: %s\n", id.Address)
 		return nil
 	}
 
@@ -207,13 +207,13 @@ func (f *Formatter) formatTable(identities []Identity) error {
 	border := "+" + strings.Join(borderParts, "+") + "+"
 
 	// Print header
-	fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintln(f.writer, border)
 	var headerParts []string
 	for _, col := range cols {
 		headerParts = append(headerParts, fmt.Sprintf(" %-*s ", col.width, col.header))
 	}
-	fmt.Fprintln(f.writer, "|"+strings.Join(headerParts, "|")+"|")
-	fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintln(f.writer, "|"+strings.Join(headerParts, "|")+"|")
+	_, _ = fmt.Fprintln(f.writer, border)
 
 	// Print data rows
 	for i, id := range identities {
@@ -224,9 +224,9 @@ func (f *Formatter) formatTable(identities []Identity) error {
 			padding := cols[j].width - displayWidth(val)
 			rowParts = append(rowParts, fmt.Sprintf(" %s%s ", val, strings.Repeat(" ", padding)))
 		}
-		fmt.Fprintln(f.writer, "|"+strings.Join(rowParts, "|")+"|")
+		_, _ = fmt.Fprintln(f.writer, "|"+strings.Join(rowParts, "|")+"|")
 	}
-	fmt.Fprintln(f.writer, border)
+	_, _ = fmt.Fprintln(f.writer, border)
 
 	return nil
 }

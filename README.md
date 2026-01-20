@@ -1,33 +1,42 @@
-## idgen
+# idgen
 
-> 一个使用 golang 编写的大陆身份证生成器，目前支持生成 姓名、身份证号、手机号、银行卡号、电子邮箱、地址信息
-该工具部分代码从 [java-testdata-generator](https://github.com/binarywang/java-testdata-generator) 翻译而来，并添加了一些其他支持；
-在此感谢原作者 [binarywang](https://github.com/binarywang)
+> Chinese identity information generator written in Go. Supports generating name, ID number, mobile phone number, bank card number, email address and address.
 
-## 安装
+Part of the code is translated from [java-testdata-generator](https://github.com/binarywang/java-testdata-generator). Thanks to the original author [binarywang](https://github.com/binarywang).
 
-安装请直接从 release 页下载预编译的二进制文件，并放到 PATH 下即可；
-docker 用户可以直接使用 `docker pull mritd/idgen` 拉取镜像；
+## Installation
 
-- **自行编译**
+Download pre-compiled binaries from the [Release](https://github.com/mritd/idgen/releases) page.
 
-确保已安装 go 1.14+，然后执行 `make install` 即可
+Docker users can pull the image directly:
 
-## 运行模式
+```bash
+docker pull mritd/idgen
+```
 
-**该工具目前支持两种运行方式:**
+### Build from source
 
-### 终端模式
+Requires Go 1.25+:
 
-直接命令行运行二进制文件即可生成对应信息，生成后将自动复制到系统剪切板
+```bash
+# Install task runner
+go install github.com/go-task/task/v3/cmd/task@latest
 
-``` sh
-➜  ~ idgen --help
+# Build
+task build
+```
 
-This tool is used to generate Chinese name、ID number、bank card number、
-mobile phone number、address and Email; automatically generate corresponding
-text to the system clipboard after generation, and generate ID number by
-default without sub-command
+## CLI Mode
+
+Run the binary directly to generate identity information. Results are automatically copied to clipboard by default.
+
+```
+$ idgen --help
+
+Identity information generator for Chinese name, ID number,
+bank card number, mobile phone number, address and Email.
+
+Generate ID number by default without sub-command.
 
 Usage:
   idgen [flags]
@@ -38,7 +47,6 @@ Available Commands:
   all         Generate all information
   bank        Generate bank card number
   email       Generate email address
-  help        Help about any command
   idno        Generate ID number
   mobile      Generate mobile phone number
   name        Generate name
@@ -46,38 +54,83 @@ Available Commands:
   version     Print version
 
 Flags:
-  -h, --help      help for idgen
-  -v, --version   Print version
-
-Use "idgen [command] --help" for more information about a command.
+  -C, --copy            Copy to clipboard (default: true for single, false for batch)
+  -c, --count int       Number of records to generate (default 1)
+  -f, --format string   Output format: table|json|csv (default "table")
+  -h, --help            help for idgen
 ```
 
-### 服务器模式
+### Examples
 
-使用 `server` 子命令将启动一个带有页面的 http 服务器用于浏览器访问，
-同时还会启动一个 json api 接口用于其他程序调用
+```bash
+# Generate single ID number (copied to clipboard)
+idgen
 
-``` sh
-➜  ~ idgen server --help
+# Generate 10 records in table format
+idgen -c 10
 
-Run a simple http server to provide page access and json data return.
-When the -m option is not specified, both html and json support are enabled,
-and the access address is as follows:
+# Generate all information
+idgen all
 
-http://BINDADDR:PORT/        return a simple html page
-http://BINDADDR:PORT/api     return json format data
+# Batch generate in JSON format
+idgen all -c 5 -f json
 
-Usage:
-  idgen server [flags]
+# Export to CSV
+idgen all -c 100 -f csv > data.csv
+```
+
+## Server Mode
+
+Start an HTTP server with web UI and API endpoints.
+
+```
+$ idgen server --help
+
+Run a simple http server to provide page access and API.
+
+Access endpoints:
+  http://BINDADDR:PORT/                  HTML page with theme
+  http://BINDADDR:PORT/api/v1/generate   Generate single record (JSON)
+  http://BINDADDR:PORT/api/v1/batch      Batch generate (JSON)
+  http://BINDADDR:PORT/api/v1/export     Export as CSV
 
 Flags:
-  -h, --help            help for server
-  -l, --listen string   http listen address (default "0.0.0.0")
-  -m, --mode string     server mode(html/json)
-  -p, --port int        http listen port (default 8080)
-
-Global Flags:
-  -v, --version   Print version
+  -l, --listen string   HTTP listen address (default "0.0.0.0")
+  -p, --port int        HTTP listen port (default 8080)
+  -t, --theme string    Default theme: cyber|terminal (default "cyber")
 ```
 
-docker 用户直接运行 `docker run -d -p 8080:8080 mritd/idgen` 即可
+### Run with Docker
+
+```bash
+docker run -d -p 8080:8080 mritd/idgen server
+```
+
+### Themes
+
+The web UI supports two themes:
+
+- **Cyberpunk** (`cyber`): Neon colors with particle animation and mouse interaction
+- **Terminal** (`terminal`): Matrix-style falling characters with green monochrome
+
+Switch themes via the button in the top-right corner, or set default theme with `--theme` flag.
+
+### API Endpoints
+
+```bash
+# Generate single record
+curl http://localhost:8080/api/v1/generate
+
+# Batch generate (default 10)
+curl http://localhost:8080/api/v1/batch
+
+# Batch generate with count
+curl http://localhost:8080/api/v1/batch?count=50
+
+# Export as CSV
+curl http://localhost:8080/api/v1/export?count=100
+```
+
+## License
+
+MIT
