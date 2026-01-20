@@ -56,12 +56,18 @@ body {
     line-height: 1.6;
 }
 
-/* Cyber theme background effect */
-[data-theme="cyber"] body {
-    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+/* Canvas background */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
 }
 
-/* Terminal theme scanline effect */
+/* Terminal theme scanline overlay */
 [data-theme="terminal"] body::before {
     content: '';
     position: fixed;
@@ -109,7 +115,20 @@ header {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: var(--glow-primary);
+    animation: logoGlow 2s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.8))
+                drop-shadow(0 0 20px rgba(0, 245, 255, 0.5))
+                drop-shadow(0 0 40px rgba(0, 245, 255, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.8))
+                drop-shadow(0 0 20px rgba(255, 0, 255, 0.5))
+                drop-shadow(0 0 40px rgba(255, 0, 255, 0.3));
+    }
 }
 
 [data-theme="terminal"] .logo {
@@ -161,12 +180,15 @@ header {
 }
 
 [data-theme="cyber"] .card {
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.15), 0 0 40px rgba(255, 0, 255, 0.1);
+    border: 1px solid rgba(0, 245, 255, 0.3);
 }
 
 [data-theme="terminal"] .card {
     border-style: solid;
     box-shadow: var(--glow-secondary);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
 }
 
 /* Fields */
@@ -270,12 +292,21 @@ header {
     font-weight: 600;
 }
 
+[data-theme="cyber"] .action-btn.primary {
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+}
+
 [data-theme="terminal"] .action-btn.primary {
     background: var(--accent-primary);
 }
 
 .action-btn.primary:hover {
     box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+}
+
+[data-theme="cyber"] .action-btn.primary:hover {
+    box-shadow: 0 0 25px rgba(0, 245, 255, 0.6), 0 0 50px rgba(255, 0, 255, 0.3);
 }
 
 .action-btn.small {
@@ -342,6 +373,11 @@ header {
     border-radius: 8px;
 }
 
+[data-theme="terminal"] .table-container {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -393,20 +429,6 @@ td.copyable.copied {
     background: rgba(0, 255, 136, 0.2);
 }
 
-td:last-child {
-    width: 40px;
-    text-align: center;
-}
-
-/* Row copy button in last column */
-td:last-child .copy-btn {
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-}
-
-tr:hover td:last-child .copy-btn {
-    opacity: 1;
-}
 
 /* Toast */
 .toast {
